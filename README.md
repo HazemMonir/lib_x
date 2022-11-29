@@ -443,12 +443,12 @@ Sometimes we only have one independent value that we need to listen to its state
 
 1. ```ValueController<T>```: 
 It's a value controller object built on top of ```ValueNotifier```. It has a the following interface:
-
-  - ```value``` => returns the current value.
-  - ```ValueListenable listenable``` => listenable object that could be used with ```ValueListenableBuilder```.
-  - ```void update(T v)``` => to update the value property of type ```T```.
-  - ```set onChange(VoidCallback callback)``` => a setter method if you want to attach a callback function that runs whenever the value changes.
-  - ```void dispose()``` => valueController cannot be used after calling this method. 
+<br>
+    - ```value``` => returns the current value.
+    - ```ValueListenable listenable``` => listenable object that could be used with ```ValueListenableBuilder```.
+    - ```void update(T v)``` => to update the value property of type ```T```.
+    - ```set onChange(VoidCallback callback)``` => a setter method if you want to attach a callback function that runs whenever the value changes.
+    - ```void dispose()``` => valueController cannot be used after calling this method. 
 <br><br>
 
 2. ```ReactiveBuilder```
