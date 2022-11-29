@@ -455,6 +455,7 @@ It's a ```StatelessWidget``` on top of ```ValueListenableBuilder``` that rebuild
     1. ```ValueController<T>```.
     2. ```Function builder(T value)```: a function with value argument that returns a widget, that rebuilds when the value of controller changes.<br>
 ### E.g.
+
 ```
 final ValueController<ThemeMode> themeModeController = ValueController<ThemeMode>(ThemeMode.dark);
 
@@ -508,18 +509,16 @@ class AdaptiveText extends StatelessWidget {
   }
 }
 ```
-<br>
-
-#### Some stuff I thought might be useful to include.
-<br>
+<br><br>
 
 ## __Widgets__ 
 <br>
 
-### ```Widget PersistStateWidget(required Widget child)``` <br>
+### ```Widget PersistStateWidget(required Widget child)``` 
 - It could be useful if you have e.g. ScrollView, and you want to maintain its state like scoll position when navigating to other tabs.
 <br>
 #### E.g.
+
 ```
 class MyListView extends StatelessWidget {
   const MyListView({super.key});
@@ -540,7 +539,8 @@ class MyListView extends StatelessWidget {
 
 ### ```Widget DismissModalWidget(required Widget child)``` <br><br>
 - If you will push a modal route and you want it to pop when clicked outside of the dialog widget, wrap the dialog widget with ```DismissModalWidget```.It's more reliable than ```barrierDismissible``` in the native function ```showDialog()```.
-### E.g.
+#### E.g.
+
 ```
 class MyDialog extends StatelessWidget {
   const MyDialog({super.key});
@@ -570,8 +570,7 @@ class ShowMyDialogButton extends StatelessWidget {
 }
 ```
 - Note: The dismissable behavior is the default if you're gonna use ```X.showModal(child: MyDialog())``` instead of showDialog().
-<br>
-<br>
+<br><br>
 
 ### ```ImageWidget``` <br>
 It has these named parameters:
