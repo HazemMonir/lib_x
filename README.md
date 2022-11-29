@@ -268,7 +268,7 @@ class UserPage extends StatelessWidget {
   }
 }
 ```
-<br>
+
 Note: If you're not going to use ScaffoldX, make sure you implement the ```BackButtonInterceptor``` to handle the back guesture.
 
 #### E.g.
@@ -307,8 +307,6 @@ class _UserPageState extends State<UserPage> {
 <br>
 
 ## __DataProvider__
-<br>
-
 #### __```Widget DataProvider<T>```__ 
 Instead of passing the data from parent widget to children to sub-children... via parameters, which gets messy very quickly, we need the concept of data provider class. And for that we can either use ```InheritedWidget``` or ```DataProvider``` to assign the desired data to a widget, and _all_ and _only_ the __descendant children & sub-children__ widgets will have access to that data via the static method ```of(context)```.
 <br><br>
