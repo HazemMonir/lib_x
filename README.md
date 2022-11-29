@@ -201,7 +201,7 @@ X.showNotification({
   })
 ```
 
-- ```void X.showBottomSheet({required Widget child})``` show this widget in bottomSheet.
+- ```void X.showBottomSheet({required Widget child})``` => show this widget in bottomSheet.
 
 - ```void X.showModal({})``` => open modal route with this dialoug widget. It takes the following named parameters:
 ```
@@ -385,13 +385,15 @@ class ProfileWidget extends StatelessWidget {
 ## __DataController & ReBuilder__
 
 ```StatefulWidget``` is a very useful widget in a lot of situations, except when it comes to data management. In a real world application, we need to decouple the __Data Layer__ from the __View Layer__, and put each layer separately, like in __MVC__ design model. That's why this solution is divided in 2 separate classes, a view class "widget", and data controller class.<br><br>
+
 1. ```DataController```:
 It's an extension of ```ChangeNotifier``` with a better name. This would be the controller class of a ```Rebuilder``` widget. This class should encapsulte all the data logic separately from the view logic. When data changes, and the ```@protected update()``` method is called, the ```ReBuilder``` widget will rebuild to reflect the changes of data.
-<br>
+<br><br>
 Notes: 
     - ```update()``` is protected by design to force separation of concers.<br>
     - ```@protected``` method in __Dart__ means: It cannot be called from outside the class. So if you're going to do crud operations on your data model, it must be inside the class.
 <br><br>
+
 2. ```ReBuilder``` :
 It's a widget built on top of ```AnimatedBuilder``` widget that will rebuild when the controller changes. and it takes 2 named parameters: <br>
     1. ```DataController controller```: an instance of a DataController object.
