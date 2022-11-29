@@ -51,7 +51,6 @@ By installing __```lib_x```__, you have these awesome packages already installed
 <br><br>
 
 ## __MaterialX & X Controller__
-___
 <br>
 
   We often need more than just ```push()``` & ```pop()``` which the simple MaterialApp provides. For a real world application, we need navigation via url, deep linking, routing without depending on ```context```... And for that we need to configure Navigator 2.0 via ```MaterialApp.router()``` or ```MaterialX()``` with the controller class __```X```__ that separates & encapsulates all the routing and themeing concerns.
@@ -61,10 +60,8 @@ ___
 Takes these 3 named parameters and builds a ```MaterialApp.router() ``` to be used in the ```runApp()``` function:
 
 - ```MaterialApp materialApp```: MaterialApp that contains the themes, and locale concerns. Not the routing options.
-<br>
 
 - ```RouteMap routeMap```: A map between the routing patterns and their corresponding ```Scaffold```s.
-<br>
 
 E.g. <br>
 lib/main.dart
@@ -153,62 +150,44 @@ Notes:
 <br>
 
 - ```ThemeData X.theme``` => returns ```ThemeData``` object of the current context
-<br>
 
 - ```MediaQueryData X.mediaQuery``` => returns ```MediaQueryData``` object of the current context
-<br>
 
 - ```ValueController<ThemeMode> X.themeMode``` => is the themeMode controller of ```MaterialX```. If you provided both light and dark themes in the materialApp. MaterialX will change automatically with system themeMode changes, unless you specified a themeMode with a different value than ```ThemeMode.system```.
-<br>
 
 - ```void switchTheme({ThemeMode? to})``` => it takes one of these values ```[ThemeMode.system, ThemeMode.dark, ThemeMode.light]``` and updates the value of ```X.themeMode```. It also updates the stausBar ```color``` and ```brightness``` accordingly.  If you didn't pass a value of themeMode, it will just switch the current themeMode to the opposite, and it will stop listening to the system themeMode changes. To change theme with system again, use<br> ```X.switchTheme(to: ThemeMode.system);```
-<br>
 
 - ```void X.setStatusBar({Color? color, Brightness? brightness})``` => to set the color and brightness of the statusBar.
-<br>
 
 - ```void X.forcePortrait()``` => to force Portait Orientation.
-<br>
 
 - ```void X.forceLandscape()``` => to force Landscape Orientation.
-<br>
 
 - ```void X.allowAutoOrientation()``` => to allow both Portait & Landscape Orientations.
-<br>
-<br>
+<br><br>
 
 #### __Route Management__
 <br>
 
 - ```String X.currentPath``` => returns a ```String``` of the current path
-<br>
 
 - ```Map<String, String>? X.currentPathParameters``` => returns a ```Map``` of the current path parameters, e.g. if the current path is 'user/12345', it will return ```{id: '12345'}```
-<br>
 
 - ```Map<String, String>? X.currentQueryParameters``` => returns a ```Map``` of the current path query parameters, e.g. 'user?id=12345' returns ```{id: '12345'}```
-<br>
 
 - ```void X.to({required String path})``` => navigate to path, that is defined in the ```RouteMap```.
-<br>
 
 - ```void X.offTo({required String path})``` => navigate to path and prevents back.
-<br>
 
 - ```void X.back()``` => go back to previous route chronologically.
-<br>
 
 - ```void X.backTo({required String path})``` => pop all routes till the provided path.
-<br>
 
 - ```void X.openDrawer()``` => open Drawer programmatically.
-<br>
 
 - ```void X.dissmissKeyboard()``` => close device keyboard if it's open.
-<br>
 
 - ```void X.showSnackBar({required SnackBar snackBar})``` => show snackBar.
-<br>
 
 - ```void X.showNotification({})``` => show notification overlay. It takes the following named parameters:
 ```
@@ -221,10 +200,8 @@ X.showNotification({
     NotificationPosition position = NotificationPosition.top,
   })
 ```
-<br>
 
 - ```void X.showBottomSheet({required Widget child})``` show this widget in bottomSheet.
-<br>
 
 - ```void X.showModal({})``` => open modal route with this dialoug widget. It takes the following named parameters:
 ```
@@ -235,17 +212,13 @@ X.showModal({
     Color? barrierColor,
   })
 ```
-<br>
 
 - ```bool X.isOpenModal``` => to check if modal is open.
-<br>
 
 - ```void X.pop()``` => pop modal, bottomSheet, drawer, or keyboard.
-<br>
-<br>
+<br><br>
 
 ## __ScaffoldX__
-___
 <br>
 
 Right after the declaration of materialApp, routeMap, and MyApp, we need to create the pages that contains a ```Scaffold``` widget and corresponds with the defined paths in the ```routeMap```. ```ScaffoldX``` is a quick way to compose a scaffold with default configurations. It has the following named parameters:
@@ -295,7 +268,8 @@ class UserPage extends StatelessWidget {
   }
 }
 ```
-#### Note: If you're not going to use ScaffoldX, make sure you implement the ```BackButtonInterceptor``` to handle the back guesture.
+<br>
+Note: If you're not going to use ScaffoldX, make sure you implement the ```BackButtonInterceptor``` to handle the back guesture.
 
 #### E.g.
 ```
@@ -333,7 +307,6 @@ class _UserPageState extends State<UserPage> {
 <br>
 
 ## __DataProvider__
-___
 <br>
 
 #### __```Widget DataProvider<T>```__ 
@@ -373,8 +346,8 @@ class UserProvider extends DataProvider<UserModel> {
   // just copy the method and change the class name.
 }
 ```
+views/pages/user_page.dart
 ```
-- views/pages/user_page.dart
 // Now the user page could be like this
 class UserPage extends StatelessWidget {
   final String username;
@@ -410,7 +383,6 @@ class ProfileWidget extends StatelessWidget {
 <br>
 
 ## __DataController & ReBuilder__
-___
 
 ```StatefulWidget``` is a very useful widget in a lot of situations, except when it comes to data management. In a real world application, we need to decouple the __Data Layer__ from the __View Layer__, and put each layer separately, like in __MVC__ design model. That's why this solution is divided in 2 separate classes, a view class "widget", and data controller class.<br><br>
 1. ```DataController```:
@@ -465,17 +437,16 @@ class ProfileWidget extends StatelessWidget {
 <br><br>
 
 ## __ValueController & ReactiveBuilder__
-___
 Sometimes we only have one independent value that we need to listen to its state. Again, we'll create 2 separate objects. ```ValueController<T>``` to control a value of some type, and ```ReactiveBuilder``` that refelcts the change of that value. <br>
 
 1. ```ValueController<T>```: 
 It's a value controller object built on top of ```ValueNotifier```. It has a the following interface:
 
-    - ```value``` => returns the current value.
-    - ```ValueListenable listenable``` => listenable object that could be used with ```ValueListenableBuilder```.
-    - ```void update(T v)``` => to update the value property of type ```T```.
-    - ```set onChange(VoidCallback callback)``` => a setter method if you want to attach a callback function that runs whenever the value changes.
-    - ```void dispose()``` => valueController cannot be used after calling this method. 
+  - ```value``` => returns the current value.
+  - ```ValueListenable listenable``` => listenable object that could be used with ```ValueListenableBuilder```.
+  - ```void update(T v)``` => to update the value property of type ```T```.
+  - ```set onChange(VoidCallback callback)``` => a setter method if you want to attach a callback function that runs whenever the value changes.
+  - ```void dispose()``` => valueController cannot be used after calling this method. 
 <br><br>
 
 2. ```ReactiveBuilder```
@@ -542,13 +513,11 @@ class AdaptiveText extends StatelessWidget {
 <br>
 
 ## __Widgets__ 
-___
-
 <br>
 
-### ```Widget PersistStateWidget(required Widget child)``` <br><br>
+### ```Widget PersistStateWidget(required Widget child)``` <br>
 - It could be useful if you have e.g. ScrollView, and you want to maintain its state like scoll position when navigating to other tabs.
-
+<br>
 #### E.g.
 ```
 class MyListView extends StatelessWidget {
@@ -566,7 +535,6 @@ class MyListView extends StatelessWidget {
   }
 }
 ```
-
 <br>
 
 ### ```Widget DismissModalWidget(required Widget child)``` <br><br>
@@ -604,7 +572,8 @@ class ShowMyDialogButton extends StatelessWidget {
 <br>
 <br>
 
-### ```ImageWidget``` has these named parameters:
+### ```ImageWidget``` <br>
+It has these named parameters:
 
 ```
 ImageWidget({ 
@@ -633,12 +602,10 @@ class MyLogo extends StatelessWidget {
 }
 ```
 <br><br>
-___
-<br><br>
 
 ### P.S. 
 - These are my personal implementations, which I don't know if it will be useful for others or not, but I hope it will be.
-- Feel free to suggest more simplifications or optimizations by pulling a request on [Github]().
+- Feel free to suggest more simplifications or optimizations by pulling a request on [Github](https://github.com/HazemMonir/lib_x).
 - Feel free extending it or modifying it as you wish.
 <br><br>
 
