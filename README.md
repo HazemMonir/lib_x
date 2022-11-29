@@ -514,9 +514,8 @@ class AdaptiveText extends StatelessWidget {
 ## __Widgets__ 
 <br>
 
-### ```Widget PersistStateWidget(required Widget child)``` 
+#### ```Widget PersistStateWidget(required Widget child)``` 
 - It could be useful if you have e.g. ScrollView, and you want to maintain its state like scoll position when navigating to other tabs.
-<br>
 #### E.g.
 
 ```
@@ -537,7 +536,7 @@ class MyListView extends StatelessWidget {
 ```
 <br>
 
-### ```Widget DismissModalWidget(required Widget child)``` <br><br>
+#### ```Widget DismissModalWidget(required Widget child)``` <br><br>
 - If you will push a modal route and you want it to pop when clicked outside of the dialog widget, wrap the dialog widget with ```DismissModalWidget```.It's more reliable than ```barrierDismissible``` in the native function ```showDialog()```.
 #### E.g.
 
@@ -572,7 +571,7 @@ class ShowMyDialogButton extends StatelessWidget {
 - Note: The dismissable behavior is the default if you're gonna use ```X.showModal(child: MyDialog())``` instead of showDialog().
 <br><br>
 
-### ```ImageWidget``` <br>
+#### ```ImageWidget``` <br>
 It has these named parameters:
 
 ```
@@ -584,11 +583,11 @@ ImageWidget({
   Color? svgColor, // if it's SVG and you want to change its color
 })
 ```
- <br>
+<br>
 
 - If you're lazy like me, and you have a path to a local image, or a url to a network image, or it's in the assets directory, just pass that path or url to this widget, and override the default values of the other parameters if you wish. This widget handles all types of images including SVG.
 
-### E.g.
+#### E.g.
 ```
 class MyLogo extends StatelessWidget {
   const MyLogo({super.key});
