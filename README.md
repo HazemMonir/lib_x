@@ -65,13 +65,13 @@ Takes these 3 named parameters and builds a ```MaterialApp.router() ``` to be us
 
 E.g. <br>
 lib/main.dart
-```
+```dart
 void main() {
   runApp(const MyApp());
 }
 ```
 lib/src/views/const/route_map.dart
-```
+```dart
 const String LoginPath = '/login';
 const String RootPath = '/';
 const String UserPath = '/user/';
@@ -109,7 +109,7 @@ final RouteMap routeMap = RouteMap(
 );
 ```
 lib/src/views/const/material_app.dart
-```
+```dart
 final MaterialApp materialApp = MaterialApp(
   title: 'Contacts App',
   debugShowCheckedModeBanner: false,
@@ -119,7 +119,7 @@ final MaterialApp materialApp = MaterialApp(
 );
 ```
 lib/src/views/my_app.dart
-```
+```dart
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -190,7 +190,7 @@ Notes:
 - ```void X.showSnackBar({required SnackBar snackBar})``` => show snackBar.
 
 - ```void X.showNotification({})``` => show notification overlay. It takes the following named parameters:
-```
+```dart
 X.showNotification({
     required Widget widget,
     bool dismissable = true,
@@ -204,7 +204,7 @@ X.showNotification({
 - ```void X.showBottomSheet({required Widget child})``` => show this widget in bottomSheet.
 
 - ```void X.showModal({})``` => open modal route with this dialoug widget. It takes the following named parameters:
-```
+```dart
 X.showModal({
     required Widget widget,
     bool safeArea = true,
@@ -223,7 +223,7 @@ X.showModal({
 
 Right after the declaration of materialApp, routeMap, and MyApp, we need to create the pages that contains a ```Scaffold``` widget and corresponds with the defined paths in the ```routeMap```. ```ScaffoldX``` is a quick way to compose a scaffold with default configurations. It has the following named parameters:
 
-```
+```dart
 Widget ScaffoldX({
   required Widget body,
   Color? bgColor,
@@ -244,7 +244,7 @@ Widget ScaffoldX({
 ``` 
 
 #### E.g.
-```
+```dart
 class UserPage extends StatelessWidget {
   final String username;
   const UserPage({Key? key, required this.username}) : super(key: key);
@@ -272,7 +272,7 @@ class UserPage extends StatelessWidget {
 Note: If you're not going to use ScaffoldX, make sure you implement the ```BackButtonInterceptor``` to handle the back guesture.
 
 #### E.g.
-```
+```dart
 class UserPage extends StatefulWidget {
   final String username;
   const UserPage({Key? key, required this.username}) : super(key: key);
@@ -317,7 +317,7 @@ __```DataProvider```__ needs 3 arguments:
 3. ```static of(context)``` method that returns the provider class instance of this context.
 
 #### E.g. models/user_model.dart
-```
+```dart
 // If we have a user model class like this
 class UserModel {
   final String id;
@@ -345,7 +345,7 @@ class UserProvider extends DataProvider<UserModel> {
 }
 ```
 views/pages/user_page.dart
-```
+```dart
 // Now the user page could be like this
 class UserPage extends StatelessWidget {
   final String username;
@@ -398,7 +398,7 @@ It's a widget built on top of ```AnimatedBuilder``` widget that will rebuild whe
     2. ```Function builder```: a function that returns a ```Widget```, which will rebuild when the controller changes.<br>
 
 #### E.g.
-```
+```dart
 // Instead of StatefulWidget and changing the data with setState(). we'll create 2 separate layers:
 // 1. data model that extends DataController
 class UserModel extends DataController {
@@ -455,8 +455,7 @@ It's a ```StatelessWidget``` on top of ```ValueListenableBuilder``` that rebuild
     1. ```ValueController<T>```.
     2. ```Function builder(T value)```: a function with value argument that returns a widget, that rebuilds when the value of controller changes.<br>
 ### E.g.
-
-```
+```dart
 final ValueController<ThemeMode> themeModeController = ValueController<ThemeMode>(ThemeMode.dark);
 
 class SwitchThemeButton extends StatelessWidget {
@@ -517,8 +516,7 @@ class AdaptiveText extends StatelessWidget {
 #### ```Widget PersistStateWidget(required Widget child)``` 
 - It could be useful if you have e.g. ScrollView, and you want to maintain its state like scoll position when navigating to other tabs.
 #### E.g.
-
-```
+```dart
 class MyListView extends StatelessWidget {
   const MyListView({super.key});
 
@@ -539,8 +537,7 @@ class MyListView extends StatelessWidget {
 #### ```Widget DismissModalWidget(required Widget child)``` <br><br>
 - If you will push a modal route and you want it to pop when clicked outside of the dialog widget, wrap the dialog widget with ```DismissModalWidget```.It's more reliable than ```barrierDismissible``` in the native function ```showDialog()```.
 #### E.g.
-
-```
+```dart
 class MyDialog extends StatelessWidget {
   const MyDialog({super.key});
 
@@ -572,9 +569,8 @@ class ShowMyDialogButton extends StatelessWidget {
 <br><br>
 
 #### ```ImageWidget``` <br>
-It has these named parameters:
-
-```
+If you have a path to a local image, or a url to a network image, or it's in the assets directory, just pass that path or url to this widget, and override the default values of the other parameters if you wish. This widget handles all types of images including SVG. It has these named parameters:
+```dart
 ImageWidget({ 
   required String path, 
   BoxFit? fit = BoxFit.contain, 
@@ -585,10 +581,10 @@ ImageWidget({
 ```
 <br>
 
-- If you're lazy like me, and you have a path to a local image, or a url to a network image, or it's in the assets directory, just pass that path or url to this widget, and override the default values of the other parameters if you wish. This widget handles all types of images including SVG.
+- If you have a path to a local image, or a url to a network image, or it's in the assets directory, just pass that path or url to this widget, and override the default values of the other parameters if you wish. This widget handles all types of images including SVG.
 
 #### E.g.
-```
+```dart
 class MyLogo extends StatelessWidget {
   const MyLogo({super.key});
 
