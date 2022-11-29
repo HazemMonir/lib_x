@@ -443,7 +443,8 @@ Sometimes we only have one independent value that we need to listen to its state
 
 1. ```ValueController<T>```: 
 It's a value controller object built on top of ```ValueNotifier```. It has a the following interface:
-<br>
+<br><be>
+
     - ```value``` => returns the current value.
     - ```ValueListenable listenable``` => listenable object that could be used with ```ValueListenableBuilder```.
     - ```void update(T v)``` => to update the value property of type ```T```.
