@@ -454,7 +454,7 @@ It's a value controller object built on top of ```ValueNotifier```. It has a the
 It's a ```StatelessWidget``` on top of ```ValueListenableBuilder``` that rebuilds when the value of the controller updates. And it takes 2 named parameters:<br>
     1. ```ValueController<T>```.
     2. ```Function builder(T value)```: a function with value argument that returns a widget, that rebuilds when the value of controller changes.<br>
-### E.g.
+#### E.g.
 ```dart
 final ValueController<ThemeMode> themeModeController = ValueController<ThemeMode>(ThemeMode.dark);
 
@@ -467,7 +467,8 @@ class SwitchThemeButton extends StatelessWidget {
         ? ThemeMode.light
         : ThemeMode.dark;
 
-    // when this button pressed, the AdaptiveText widget will change the text color, because it has ReactiveBuilder which is controlled by themeModeController
+    // when this button pressed, the AdaptiveText widget will change the text color, 
+    // because it has ReactiveBuilder which is controlled by themeModeController
 
     return TextButton(
       onPressed: () => themeModeController.update(value()),
