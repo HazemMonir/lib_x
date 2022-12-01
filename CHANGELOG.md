@@ -4,8 +4,12 @@
 
 ## 0.0.2
 
-* Fixed example readme
+* Added example.md
 
 ## 0.0.3
 
 * Removed dart:io to support web
+
+## 0.0.4
+
+* Edited README.md
