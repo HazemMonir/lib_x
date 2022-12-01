@@ -33,6 +33,12 @@ Widget drawerIcon({double? size, Color? color}) => DefaultIcon(
       size: size,
     );
 
+Widget clockIcon({double? size, Color? color}) => DefaultIcon(
+      icon: Icons.schedule,
+      color: color,
+      size: size,
+    );
+
 Widget usersIcon({double? size, Color? color}) => DefaultIcon(
       icon: Icons.recent_actors,
       color: color,
