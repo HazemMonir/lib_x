@@ -1,8 +1,6 @@
 library lib_x;
 
 export 'dart:async';
-export 'dart:io' show Platform;
-export 'dart:io';
 export 'dart:math';
 
 export 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -36,7 +34,6 @@ export 'package:lib_x/src/x/value_controller/value_controller.dart';
 //
 export 'package:lib_x/src/x/widgets/_misc.dart';
 export 'package:lib_x/src/x/widgets/dismissable_modal.dart';
-export 'package:lib_x/src/x/widgets/image_widget.dart';
 export 'package:lib_x/src/x/widgets/persist_state_widget.dart';
 export 'package:lib_x/src/x/widgets/scaffold_x.dart';
 export 'package:mime/mime.dart';

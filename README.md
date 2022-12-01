@@ -58,7 +58,7 @@ By installing __```lib_x```__, you have these awesome packages already installed
 <br><br>
 
 ### __```Widget MaterialX```__<br>
-Takes these 3 named parameters and builds a ```MaterialApp.router() ``` to be used in the ```runApp()``` function:
+Takes these 2 named parameters and builds a ```MaterialApp.router() ``` to be used in the ```runApp()``` function:
 
 - ```MaterialApp materialApp```: MaterialApp that contains the themes, and locale concerns. Not the routing options.
 
@@ -156,7 +156,7 @@ Notes:
 
 - ```ValueController<ThemeMode> X.themeMode``` => is the themeMode controller of ```MaterialX```. If you provided both light and dark themes in the materialApp. MaterialX will change automatically with system themeMode changes, unless you specified a themeMode with a different value than ```ThemeMode.system```.
 
-- ```void switchTheme({ThemeMode? to})``` => it takes one of these values ```[ThemeMode.system, ThemeMode.dark, ThemeMode.light]``` and updates the value of ```X.themeMode```. It also updates the stausBar ```color``` and ```brightness``` accordingly.  If you didn't pass a value of themeMode, it will just switch the current themeMode to the opposite, and it will stop listening to the system themeMode changes. To change theme with system again, use<br> ```X.switchTheme(to: ThemeMode.system);```
+- ```void X.switchTheme({ThemeMode? to})``` => it takes one of these values ```[ThemeMode.system, ThemeMode.dark, ThemeMode.light]``` and updates the value of ```X.themeMode```. It also updates the stausBar ```color``` and ```brightness``` accordingly.  If you didn't pass a value of themeMode, it will just switch the current themeMode to the opposite, and it will stop listening to the system themeMode changes. To change theme with system again, use<br> ```X.switchTheme(to: ThemeMode.system);```
 
 - ```void X.setStatusBar({Color? color, Brightness? brightness})``` => to set the color and brightness of the statusBar.
 
@@ -270,7 +270,7 @@ class UserPage extends StatelessWidget {
 }
 ```
 
-Note: If you're not going to use ScaffoldX, make sure you implement the ```BackButtonInterceptor``` to handle the back guesture.
+Note: If you're not going to use ScaffoldX, make sure to implement the ```BackButtonInterceptor``` to handle the back guesture.
 
 #### E.g.
 ```dart
@@ -327,9 +327,9 @@ class UserModel {
   UserModel({required this.id, required this.username});
 }
 
-// To create a userModel provider widget
+// To create a userModel provider
 class UserProvider extends DataProvider<UserModel> {
-  // Declare the desired data you want the provider to provide
+  // Declare the desired data you want the class to provide
   final UserModel userModel;
 
   const UserProvider({
@@ -568,36 +568,6 @@ class ShowMyDialogButton extends StatelessWidget {
 }
 ```
 - Note: The dismissable behavior is the default if you're gonna use ```X.showModal(child: MyDialog())``` instead of showDialog().
-<br><br>
-
-#### ```ImageWidget``` <br>
-If you have a path to a local image, or a url to a network image, or it's in the assets directory, just pass that path or url to this widget, and override the default values of the other parameters if you wish. This widget handles all types of images including SVG. It has these named parameters:
-```dart
-ImageWidget({ 
-  required String path, 
-  BoxFit? fit = BoxFit.contain, 
-  Widget? loadWidget, // a loader widget for when it's still loading
-  Widget? loadingErrorWidget, // a fallback widget for error loading
-  Color? svgColor, // if it's SVG and you want to change its color
-})
-```
-<br>
-
-- If you have a path to a local image, or a url to a network image, or it's in the assets directory, just pass that path or url to this widget, and override the default values of the other parameters if you wish. This widget handles all types of images including SVG.
-
-#### E.g.
-```dart
-class MyLogo extends StatelessWidget {
-  const MyLogo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const ImageWidget(
-      path:'https://cdn.dribbble.com/users/1622791/screenshots/11174104/flutter_intro.png',
-    );
-  }
-}
-```
 <br><br>
 
 ### P.S. 
