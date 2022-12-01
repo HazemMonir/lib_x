@@ -29,6 +29,7 @@ __lib_x__ is a simple library which includes some well tested, lightweight, and 
   - [http](https://pub.dev/packages/http)
   - [intl](https://pub.dev/packages/intl)
   - [shimmer](https://pub.dev/packages/shimmer)
+  - [crypto](https://pub.dev/packages/crypto)
 
 <br>
 
@@ -604,5 +605,7 @@ class MyLogo extends StatelessWidget {
 - Feel free to suggest more simplifications or optimizations by pulling a request on [Github](https://github.com/HazemMonir/lib_x).
 - Feel free extending it or modifying it as you wish.
 <br><br>
+
+## Credits does to the authers of the implemented packages & of course the developers of Dart and Flutter
 
 ## Happy Coding
