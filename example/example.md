@@ -112,8 +112,8 @@ Note: each service class should be an encapsulation for only one service. Don't 
 - ## __data/__<br>
 
 Here will be the data concerns only. lib_x provides 2 useful types that will help with data management concerns.
-  1. ```DataController```  will make the data model listenable be the views.
-  2. ```DataProvider<T>``` will make the data accessible by inheritance.
+  1. ```DataController```  will make the data model listenable by the views.
+  2. ```DataProvider<T>``` will make the data accessible by inheritance in the widget tree.
 
 #### lib/src/data/news_story.dart
 ```dart
