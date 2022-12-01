@@ -12,7 +12,7 @@ __lib_x__ is a simple library which includes some well tested, lightweight, and 
 ### The purpose of this library:
 - Grouping some basic packages into one.
 - Avoiding some of the commonly needed boilerplate.
-- Providing solutions for [__Routing__, __State Management__, __Data Providers__].
+- Providing simple solutions for [__Routing__, __State Management__, __Data Providers__].
 - Helping with the __Design Pattern & Separation Of Concerns__.
 - __Semantic & Self-Explanatory Naming__.
 <br><br>

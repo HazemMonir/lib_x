@@ -1,7 +1,7 @@
 name: lib_x
 description: lib_x is a simple library which includes some well tested, lightweight, and commonly needed packages.
  And on top of those packages, there're some preconfigured solutions and simplifications to help you quickly focus on the scaffold within few steps.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/HazemMonir/lib_x
 
 environment:
