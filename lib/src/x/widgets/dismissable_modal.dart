@@ -1,5 +1,6 @@
 import 'package:lib_x/lib_x.dart';
 
+// used by X.showModal to make dialog dismissable
 class DismissableModal extends StatelessWidget {
   final Widget child;
   const DismissableModal({super.key, required this.child});

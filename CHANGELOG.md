@@ -13,3 +13,7 @@
 ## 0.0.4
 
 * Edited README.md
+
+## 0.0.5
+
+* Edited README.md & added more documentations

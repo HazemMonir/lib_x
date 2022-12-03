@@ -1,2 +1,0 @@
-// 
-// class ListX implements List {}

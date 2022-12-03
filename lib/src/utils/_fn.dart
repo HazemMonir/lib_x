@@ -10,14 +10,17 @@ bool isUrl(String url) => Uri.parse(url).host.isNotEmpty;
 bool isAsset(String path) => path.startsWith('assets/');
 bool isSVG(String path) => path.contains('.svg');
 
+// returns if system is in dark mode
 bool isDarkMode() =>
     SchedulerBinding.instance.platformDispatcher.platformBrightness ==
     Brightness.dark;
-
+// returns the system themeMode
 ThemeMode get sysThemeMode => isDarkMode() ? ThemeMode.dark : ThemeMode.light;
 
+// returns the int value of now timestamp in seconds
 int get now => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
+// to formate timestamp to human format
 String formatTimestamp(int timestamp) {
   late String d12;
   if (timestamp != 0) {
@@ -45,15 +48,19 @@ String formatTimestamp(int timestamp) {
   return d12.shortMonth();
 }
 
+// letters string
 const String chars =
     '_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789';
+// numbers string
 const String numbers = '0123456789';
 
+// if a string is a number
 bool isNumeric(String str) {
   final RegExp numeric = RegExp(r'^-?[0-9]+$');
   return numeric.hasMatch(str);
 }
 
+// to generate random string with default length value of 16
 String genString({int length = 16}) {
   final String randomString = List.generate(
     length,
@@ -63,6 +70,7 @@ String genString({int length = 16}) {
   return randomString;
 }
 
+// to generate random number with default length value of 16
 String genNum({int length = 16}) {
   final String randomString = List.generate(
     length,
@@ -72,20 +80,23 @@ String genNum({int length = 16}) {
   return randomString;
 }
 
+// to generate timestamp based id string
 String genId({int length = 16}) => genString(length: length) + now.toString();
 
+// to convert string to SHA256
 String stringToSHA256(String string) {
   final bytes = utf8.encode(string);
   final digest = sha256.convert(bytes);
   return digest.toString();
 }
 
-// checks for mp4 & mov only
-bool isVideo(String url) {
-  if (isUrl(url)) {
-    return url.contains('.mp4');
-  } else {
-    String fileMime = lookupMimeType(url)!;
-    return fileMime == "video/mp4" || fileMime == "video/mov";
-  }
-}
+// needs mime package installed
+// checks if a file path or url is mp4 || mov
+// bool isVideo(String url) {
+//   if (isUrl(url)) {
+//     return url.contains('.mp4');
+//   } else {
+//     String fileMime = lookupMimeType(url)!;
+//     return fileMime == "video/mp4" || fileMime == "video/mov";
+//   }
+// }

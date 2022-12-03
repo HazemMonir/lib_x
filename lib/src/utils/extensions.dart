@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:math' as math;
 
 extension ExtendNumber on num {
+  // 100,000 becomes 100K
   String kformat() {
     num n = this;
     String u = '';
@@ -35,6 +36,7 @@ extension ExtendDouble on double {
 }
 
 extension ExtendString on String {
+  // to use monthes short formate, so 'January' becomes 'Jan.'
   String shortMonth() => replaceAll('January', 'Jan.')
       .replaceAll('February', 'Feb.')
       .replaceAll('March', 'Mar.')

@@ -24,12 +24,7 @@ __lib_x__ is a simple library which includes some well tested, lightweight, and 
   - [back_button_interceptor](https://pub.dev/packages/back_button_interceptor)
   - [google_fonts](https://pub.dev/packages/google_fonts)
   - [font_awesome_flutter](https://pub.dev/packages/font_awesome_flutter)
-  - [flutter_svg](https://pub.dev/packages/flutter_svg)
-  - [mime](https://pub.dev/packages/mime)
-  - [http](https://pub.dev/packages/http)
   - [intl](https://pub.dev/packages/intl)
-  - [shimmer](https://pub.dev/packages/shimmer)
-  - [crypto](https://pub.dev/packages/crypto)
 
 <br>
 
@@ -222,7 +217,7 @@ X.showModal({
 ## __ScaffoldX__
 <br>
 
-Right after the declaration of materialApp, routeMap, and MyApp, we need to create the pages that contains a ```Scaffold``` widget and corresponds with the defined paths in the ```routeMap```. ```ScaffoldX``` is a quick way to compose a scaffold with default configurations. It has the following named parameters:
+Right after finishing MyApp, we need to create the pages that contains a ```Scaffold``` widget and corresponds with the defined paths in the ```routeMap```. ```ScaffoldX``` is a quick way to compose a scaffold with default configurations. It has the following named parameters:
 
 ```dart
 Widget ScaffoldX({

@@ -1,5 +1,6 @@
 import 'package:lib_x/lib_x.dart';
 
+// a layer over ChangeNotifier to be used in ReBuilder widget
 class DataController extends ChangeNotifier {
   @protected
   void update() => notifyListeners();

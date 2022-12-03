@@ -1,21 +1,36 @@
 import 'package:lib_x/lib_x.dart';
 
+// for a quick scaffolding
 class ScaffoldX extends StatefulWidget {
+  // required: scaffold body
   final Widget body;
+// optional: appBar
   final Widget? appBar;
+  // appBar height default height is 60
   final double? appBarHeight;
+  // optional: drawer
   final Widget? drawer;
+  // optional: NavigationBar
   final Widget? bottomNavigationBar;
+  // optional: BottomSheet
   final Widget? bottomSheet;
+  // optional: FloatingActionButton
   final Widget? fab;
+  // optional: fab location
   final FloatingActionButtonLocation? fabLocation;
-
+// optional: scaffold constrains
   final BoxConstraints? constraints;
+  // optional: backgroundColor
   final Color? bgColor;
+  //optional: bg decoration
   final DecorationImage? bgDecorationImage;
+  // default textStyle: TextStyle(color: black, fontSize: 16),
   final TextStyle textStyle;
+  // safearea is true by default
   final bool safeArea;
+  // optional: if true, the body will be wrapped by SingleChildScrollView
   final bool scrollView;
+  //optional: on init function
   final VoidCallback? onInit;
 
   const ScaffoldX({
@@ -26,10 +41,10 @@ class ScaffoldX extends StatefulWidget {
     this.bottomNavigationBar,
     this.bottomSheet,
     this.fab,
+    this.fabLocation,
     this.bgColor,
     this.constraints,
     this.textStyle = const TextStyle(color: black, fontSize: 16),
-    this.fabLocation,
     this.appBarHeight = 60,
     this.bgDecorationImage,
     this.onInit,
@@ -44,7 +59,7 @@ class ScaffoldX extends StatefulWidget {
 class _ScaffoldXState extends State<ScaffoldX> {
   @override
   void initState() {
-    widget.onInit;
+    if (widget.onInit != null) widget.onInit!();
     BackButtonInterceptor.add(myInterceptor);
     super.initState();
   }
