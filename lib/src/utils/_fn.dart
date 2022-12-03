@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 // ignore: depend_on_referenced_packages
-import 'package:crypto/crypto.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:lib_x/lib_x.dart';
@@ -83,12 +80,13 @@ String genNum({int length = 16}) {
 // to generate timestamp based id string
 String genId({int length = 16}) => genString(length: length) + now.toString();
 
+// needs crypto package
 // to convert string to SHA256
-String stringToSHA256(String string) {
-  final bytes = utf8.encode(string);
-  final digest = sha256.convert(bytes);
-  return digest.toString();
-}
+// String stringToSHA256(String string) {
+//   final bytes = utf8.encode(string);
+//   final digest = sha256.convert(bytes);
+//   return digest.toString();
+// }
 
 // needs mime package installed
 // checks if a file path or url is mp4 || mov
