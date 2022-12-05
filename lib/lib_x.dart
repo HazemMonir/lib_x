@@ -9,15 +9,12 @@ export 'package:flutter/foundation.dart';
 export 'package:flutter/material.dart';
 export 'package:flutter/rendering.dart';
 export 'package:flutter/services.dart';
-export 'package:font_awesome_flutter/font_awesome_flutter.dart';
-export 'package:google_fonts/google_fonts.dart';
 //
-export 'package:lib_x/src/const/icons.dart';
 export 'package:lib_x/src/const/theme_data.dart';
-//
-export 'package:lib_x/src/utils/_fn.dart';
 export 'package:lib_x/src/utils/extensions.dart';
 export 'package:lib_x/src/utils/implements.dart';
+//
+export 'package:lib_x/src/utils/x_utils.dart';
 //
 export 'package:lib_x/src/x/data_controller/data_controller.dart';
 export 'package:lib_x/src/x/data_controller/rebuilder.dart';

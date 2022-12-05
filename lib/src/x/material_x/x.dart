@@ -5,6 +5,7 @@ import 'package:lib_x/lib_x.dart';
 const String Root = '/';
 final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
+// X short for MaterialX Controller
 abstract class X implements Singleton {
   static late SingletonFlutterWindow
       _window; // private: used to set onPlatformBrightnessChanged
@@ -21,9 +22,9 @@ abstract class X implements Singleton {
       MediaQuery.of(currentContext); // getter: to MediaQueryData
   static ThemeData get theme =>
       Theme.of(currentContext); // getter: for the current active theme
-  static final ValueController<ThemeMode> themeMode = ValueController<
-          ThemeMode>(
-      sysThemeMode); // ValueController: for a ReactiveBuilder to change the ThemeMode
+  static final ValueController<ThemeMode> themeMode =
+      ValueController<ThemeMode>(XUtils
+          .sysThemeMode); // ValueController: for a ReactiveBuilder to change the ThemeMode
 
   static bool isOpenModal = false; // bool:
 
@@ -64,7 +65,7 @@ abstract class X implements Singleton {
       _window.onPlatformBrightnessChanged = _updateThemeMode;
       themeMode.onChange = _updateStatusBar;
       Future.delayed(const Duration(seconds: 1), () {
-        themeMode.update(sysThemeMode);
+        themeMode.update(XUtils.sysThemeMode);
         _updateStatusBar();
       });
     }
@@ -72,7 +73,7 @@ abstract class X implements Singleton {
 
   // private: to update theme mode and the statusbar color & brightness accordingly
   static void _updateThemeMode() {
-    themeMode.update(sysThemeMode);
+    themeMode.update(XUtils.sysThemeMode);
     _updateStatusBar();
   }
 
@@ -101,7 +102,7 @@ abstract class X implements Singleton {
               : ThemeMode.dark);
     } else {
       sysOnChange = _updateThemeMode;
-      value = sysThemeMode;
+      value = XUtils.sysThemeMode;
     }
 
     _window.onPlatformBrightnessChanged = sysOnChange;
@@ -204,7 +205,7 @@ abstract class X implements Singleton {
     }
     if (dismissable) {
       widget = Dismissible(
-        key: Key(genId()),
+        key: Key(XUtils.genId()),
         onDismissed: (direction) => onDismiss,
         child: widget,
       );

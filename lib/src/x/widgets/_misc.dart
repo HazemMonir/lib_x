@@ -24,54 +24,7 @@ class Constrained extends StatelessWidget {
   }
 }
 
-// quick drawer button
-class DrawerButton extends StatelessWidget {
-  final Color? color;
-  final Color? iconColor;
-  final double? iconSize;
-
-  const DrawerButton({
-    Key? key,
-    this.iconColor,
-    this.iconSize,
-    this.color,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      color: color,
-      onPressed: () => Scaffold.of(context).openDrawer(),
-      icon: drawerIcon(
-        size: iconSize ?? 30,
-        color: iconColor ?? Colors.black,
-      ),
-    );
-  }
-}
-
-// quick line widget to use as a separator
-class LineWidget extends StatelessWidget {
-  // default line height is 0
-  final double? height;
-  // default thikness is 1
-  final double? thikness;
-  // default line color is transparent black
-  final Color? color;
-
-  const LineWidget({super.key, this.height, this.thikness, this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Divider(
-      height: height ?? 0,
-      thickness: thikness ?? 1,
-      color: color ?? black.withOpacity(.2),
-    );
-  }
-}
-
-// just like padding widget but for the OCD
+// semantic padding widget but for the sake of OCD
 class Margin extends StatelessWidget {
   // default margin is 10 all directions
   final EdgeInsets margin;
@@ -86,9 +39,41 @@ class Margin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: margin,
+    return Padding(
+      padding: margin,
       child: child,
+    );
+  }
+}
+
+// line widget to use as a separator
+class LineWidget extends StatelessWidget {
+  // default line height is 0
+  final double? height;
+  // default thikness is 1
+  final double? thikness;
+  // default line color is black transparent 20%
+  final Color? color;
+
+  final EdgeInsets margin;
+
+  const LineWidget({
+    super.key,
+    this.height,
+    this.thikness,
+    this.color,
+    this.margin = const EdgeInsets.all(10),
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Margin(
+      margin: margin,
+      child: Divider(
+        height: height ?? 0,
+        thickness: thikness ?? 1,
+        color: color ?? black.withOpacity(.2),
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 name: lib_x
-description: lib_x is an Object-Oriented approach to flutter. It provides Routing, State Management & Data Provider Solution.
-version: 0.0.5
+description: lib_x is an Object-Oriented approach to flutter. It provides Routing, State Management & Data Providers Solutions.
+version: 0.0.6
 homepage: https://github.com/HazemMonir/lib_x
 
 environment:
@@ -10,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  font_awesome_flutter: ^10.2.1
-  google_fonts: ^3.0.1
   overlay_support: ^2.1.0
   routemaster: ^1.0.1
   back_button_interceptor: ^6.0.2

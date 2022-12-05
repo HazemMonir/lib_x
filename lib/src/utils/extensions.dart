@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 extension ExtendNumber on num {
   // 100,000 becomes 100K
+  // works up to trillions
   String kformat() {
     num n = this;
     String u = '';

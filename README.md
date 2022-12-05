@@ -22,8 +22,6 @@ __lib_x__ is a simple library which includes some well tested, lightweight, and 
   - [overlay_support](https://pub.dev/packages/overlay_support)
   - [url_strategy](https://pub.dev/packages/url_strategy)
   - [back_button_interceptor](https://pub.dev/packages/back_button_interceptor)
-  - [google_fonts](https://pub.dev/packages/google_fonts)
-  - [font_awesome_flutter](https://pub.dev/packages/font_awesome_flutter)
   - [intl](https://pub.dev/packages/intl)
 
 <br>
@@ -43,6 +41,7 @@ By installing __```lib_x```__, you have these awesome packages already installed
     - [__DataController__](#DataController)
     - [__ReBuilder__](#ReBuilder())
   - [__ValueController & ReactiveBuilder__](#ValueController-&-ReactiveBuilder)
+  - [__XUtils__](#XUtils)
   - [__Bonus Widgets__](#Widgets)
 <br><br>
 
@@ -505,6 +504,28 @@ class AdaptiveText extends StatelessWidget {
   }
 }
 ```
+<br><br>
+
+## __XUtils__
+It's an abstract class that provides some handy quick solutions. And it has the following static interface: <br>
+- ```bool XUtils.isUrl(String string)``` => check if string is url
+- ```bool XUtils.isAsset(String path)``` => check if path starts with assets/
+- ```bool XUtils.isSVG(String path)``` => check if path contains .svg
+- ```bool getter XUtils.isSysDarkMode``` => returns true if system is in dark mode || false
+- ```ThemeMode getter XUtils.sysThemeMode``` => returns the system's current themeMode
+- ```int getter XUtils.now``` => returns the int value of now timestamp in seconds.
+- ```String XUtils.formatTimestamp(int timestamp, {bool shortMonthFormat = true})``` => convert timestamp to readable format.
+  - if today: returns [Hours:Minutes AM/PM] e.g. 5:30 PM
+  - if yesterday: returns [Yesterday - Hour AM/PM] e.g. Yesterday - 8 AM
+  - if same year: returns [Month Day] e.g. May 29
+  - else: returns [Month Day Year] e.g. Jan. 25 2011
+  - default month format is short e.g. January becomes Jan.
+- ```bool XUtils.isNumeric(String str)``` => check if a string is a number e.g. '123' returns true, '+1' returns false
+- ```bool XUtils.isEmail(String email)``` check if string is a valid email format based on the HTML5 email validation specs
+- ```String XUtils.genString({int length = 16})``` => generate random string with default length value of 16
+- ```String XUtils.genNum({int length = 16})``` => generate random number string with default length value of 16
+- ```String XUtils.genId({int length = 16})``` => generate timestamp based id string
+
 <br><br>
 
 ## __Widgets__ 

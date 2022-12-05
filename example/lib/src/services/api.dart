@@ -8,7 +8,7 @@ abstract class Api {
     final List<Map<String, dynamic>> snapshot = List.generate(
       10,
       (index) => {
-        'id': genId(),
+        'id': XUtils.genId(),
         'title': 'Title: $index',
         'content': 'Some content here',
       },
