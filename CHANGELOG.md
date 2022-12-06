@@ -26,6 +26,10 @@
 
 * Added some optimizations & full documentation
 
-## 0.1.01
+## 0.1.1
 
 * Fixed README.md
+
+## 0.1.2
+
+* Updated package description

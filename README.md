@@ -1,7 +1,7 @@
 # __lib_x__
 <br>
 
-__lib_x__ is a simple library which includes some well tested, lightweight, and commonly needed packages. And on top of those packages, there're some preconfigured solutions and simplifications to help you quickly focus on the scaffold within few steps.
+__lib_x__ is a simple library that includes some well tested, and commonly needed packages. And on top of those packages, there're some preconfigured solutions and simplifications for a better architecture design.
 <br><br>
 
 ### __lib_x__ is designed to complement 2 things:
@@ -48,17 +48,15 @@ By installing __```lib_x```__, you have these awesome packages already installed
   - [__Bonus Widgets__](#widgets)
 <br><br>
 
-## __MaterialX & X Controller__
-<br>
+## __MaterialX & X Controller__<br>
 
-  We often need more than just ```push()``` & ```pop()``` which the simple MaterialApp provides. For a real world application, we need navigation via url, deep linking, routing without depending on ```context```... And for that we need to configure Navigator 2.0 via ```MaterialApp.router()``` or ```MaterialX()``` with the controller class __```X```__ that separates & encapsulates all the routing and themeing concerns.
+We often need more than just ```push()``` & ```pop()``` which the simple MaterialApp provides. For a real world application, we need navigation via url, deep linking, routing without depending on ```context```... And for that we need to configure Navigator 2.0 via ```MaterialApp.router()``` or ```MaterialX()``` with the controller class __```X```__ that separates & encapsulates all the routing and themeing concerns.
 <br><br>
 
 ### __```MaterialX```__<br>
 Takes these 2 named parameters and builds a ```MaterialApp.router() ``` to be used in the ```runApp()``` function:
 
-- ```MaterialApp materialApp```: MaterialApp that contains the themes, and locale concerns. Not the routing options.
-
+- ```MaterialApp materialApp```: MaterialApp that contains the themes, and locale concerns. Not the routing options.<br>
 - ```RouteMap routeMap```: A map between the routing patterns and their corresponding ```Scaffold```s.
 
 E.g. <br>
@@ -140,8 +138,8 @@ class MyApp extends StatelessWidget {
 It's an abstract controller class for the ```MaterialX``` widget, and it has the following interface:<br>
 
 Notes:
-  - ```abstract class``` in __Dart__ simply means it's not to be instantiated, and can have abstract methods.
-  - __Abstract Method__ in __Dart__ is a method to be implemented. It's a function without a body inside an ```abstract class``` e.g. the famous ```build``` method in the  ```abstract class StatelessWidget```.
+- ```abstract class``` in __Dart__ simply means it's not to be instantiated, and can have abstract methods.
+- __Abstract Method__ in __Dart__ is a method to be implemented. It's a function without a body inside an ```abstract class``` e.g. the famous ```build``` method in the  ```abstract class StatelessWidget```.
 <br><br>
 
 #### __Theme Management__
@@ -311,8 +309,8 @@ Instead of passing the data from parent widget to children to sub-children... vi
 
 __```DataProvider```__ needs 3 arguments:
 1. Data Object ```data``` of any type ```T```, like ```UserModel```, ```List<String>```, ... etc.
-2. ```Widget child``` that holds the data for its descendant widgets to access.
-3. ```static of(context)``` method that returns the provider class instance of this context.
+2. ```Widget child``` is a data access point for its descendant widgets.
+3. ```static of(context)``` to return the provider class instance of this context.
 
 #### E.g. models/user_model.dart
 ```dart
@@ -383,23 +381,23 @@ class ProfileWidget extends StatelessWidget {
 ```StatefulWidget``` is a very useful widget in a lot of situations, except when it comes to data management. In a real world application, we need to decouple the __Data Layer__ from the __Render Layer__, and put each layer separately, like in __MVC__ design. That's why this solution is divided in 2 separate classes, a view class ```Widget```, and a ```StatefulData``` controller class.<br><br>
 
 ### ```StatefulData```:
-It's an extension of ```ChangeNotifier``` with a better name. This would be the controller class of a ```Rebuilder``` widget. This class should encapsulte all the data logic separately from the view logic. When data changes, and the ```@protected update()``` method is called, the ```ReBuilder``` widget will rebuild to reflect the changes of data.
+It's an extension of ```ChangeNotifier``` with a better name. It's the controller class of a ```Rebuilder``` widget. This class should encapsulte all the data logic separately from the view logic. When data changes, and the ```@protected update()``` method is called, the ```ReBuilder``` widget will rebuild to reflect changes of data.
 <br><br>
 Notes: <br>
-  - ```update()``` is protected by design to force separation of concers.<br>
-  - ```@protected``` method in __Dart__ means: It cannot be called from outside the class. So if you're going to do crud operations on your data model, it must be inside the class.
+- ```update()``` is protected by design to force separation of concers.<br>
+- ```@protected``` method in __Dart__ means: It cannot be called from outside the class. So if you're going to do crud operations on your data model, it must be inside the class.
 <br><br>
 
 ### ```ReBuilder``` :
-It's an AnimatedBuilder abstracted from context that will rebuild when the state of data changes. and it takes 2 named parameters: <br>
-  1. ```StatefulData controller```: an instance of a StatefulData object.
-  <br>
-  2. ```Function builder```: a function that returns a ```Widget```, which will rebuild when the controller say so.
+It's an AnimatedBuilder abstracted from context. It will rebuild when the state of data changes using the protected method ```update()```. and it takes 2 named parameters: <br>
+1. ```StatefulData controller```: an instance of a StatefulData object.
+<br>
+2. ```Function builder```: a function that returns a ```Widget```, which will rebuild when the controller say so.
   <br>
 
 #### E.g.
 ```dart
-// Instead of StatefulWidget and changing the data with setState(). we'll create 2 separate layers:
+// Instead of StatefulWidget and changing the state of data with setState(). we'll create 2 separate layers:
 // 1. data model that extends StatefulData
 class UserModel extends StatefulData {
   final String id;
@@ -437,10 +435,10 @@ class ProfileWidget extends StatelessWidget {
 <br><br>
 
 ## __ValueController & ReactiveBuilder__
-Sometimes we only have one independent value that we need to listen to its state. Again, we'll create 2 separate objects. ```ValueController<T>``` to control a value of some type ```T```, and ```ReactiveBuilder``` that refelcts the change of that value. <br>
+Sometimes we only have one independent value that we need to listen to its state. Again, we'll create 2 separate classes: view class & value controller class<br>
 
 ### ```ValueController<T>```: 
-It's a value controller object built on top of ```ValueNotifier```. It has a the following interface:
+It's a value controller object built on top of ```ValueNotifier```. It has a the following public interface:
 <br><be>
 
   - ```value``` => returns the current value.
@@ -452,8 +450,8 @@ It's a value controller object built on top of ```ValueNotifier```. It has a the
 
 ### ```ReactiveBuilder```
 It's a ```ValueListenableBuilder``` abstracted from context. It rebuilds when ```controller.update(value)``` invoked. And it takes 2 named parameters:<br>
-  1. ```ValueController<T>```.
-  2. ```Function builder(T value)```: a function with value argument that returns a widget, that rebuilds when the value of controller changes.<br>
+1. ```ValueController<T>```.
+2. ```Function builder(T value)```: a function with value argument that returns a widget, that rebuilds when the value of controller changes.<br>
 #### E.g.
 ```dart
 final ValueController<ThemeMode> themeModeController = ValueController<ThemeMode>(ThemeMode.dark);
@@ -517,8 +515,8 @@ It's an ```abstract class``` that provides some handy quick solutions. And it ha
 - ```bool XUtils.isAsset(String path)``` => check if path starts with ```"assets/"```
 - ```bool XUtils.isSVG(String path)``` => check if path contains ```".svg"```
 - ```bool getter XUtils.isSysDarkMode``` => returns ```true``` if system is in dark mode || ```false```
-- ```ThemeMode getter XUtils.sysThemeMode``` => returns the system's current themeMode
-- ```int getter XUtils.now``` => returns the int value of now timestamp in seconds.
+- ```ThemeMode getter XUtils.sysThemeMode``` => returns the system's current ```ThemeMode``` value
+- ```int getter XUtils.now``` => returns the int value of now timestamp in seconds
 - ```String XUtils.formatTimestamp(int timestamp, {bool shortMonthFormat = true})``` => convert timestamp to readable format.
   - if today: returns [Hours:Minutes AM/PM] e.g. 5:30 PM
   - if yesterday: returns [Yesterday - Hour AM/PM] e.g. Yesterday - 8 AM
