@@ -1,7 +1,8 @@
 import 'package:lib_x/lib_x.dart';
 
-// a layer over ChangeNotifier to be used in ReBuilder widget
+/// a layer over ChangeNotifier to be used in ReBuilder widget
 class StatefulData extends ChangeNotifier {
+  /// protected to force separation of concerns
   @protected
   void update() => notifyListeners();
 }

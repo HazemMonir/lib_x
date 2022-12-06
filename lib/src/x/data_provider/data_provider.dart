@@ -1,13 +1,17 @@
 import 'package:lib_x/lib_x.dart';
 
-// an extension of InheritedWidget to provides data from context
+/// an extension of InheritedWidget to provides data from context
 class DataProvider<T> extends InheritedWidget {
   final T data;
 
   const DataProvider({
     super.key,
-    required this.data, // any type of data
-    required super.child, // base widget for the data
+    required this.data,
+
+    /// any type of data
+    required super.child,
+
+    /// base widget for the data
   });
 
   @override

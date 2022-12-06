@@ -3,35 +3,35 @@ import 'package:flutter/scheduler.dart';
 import 'package:intl/intl.dart';
 import 'package:lib_x/lib_x.dart';
 
-// XU short for X Utilities
+/// XU short for X Utilities
 abstract class XUtils {
-  // check if string is url
+  /// check if string is url
   static bool isUrl(String url) => Uri.parse(url).host.isNotEmpty;
 
-  // check if path starts with assets/
+  /// check if path starts with assets/
   static bool isAsset(String path) => path.startsWith('assets/');
 
-  // check if path contains .svg
+  /// check if path contains .svg
   static bool isSVG(String path) => path.contains('.svg');
 
-  // returns if system is in dark mode
+  /// returns if system is in dark mode
   static bool get isSysDarkMode =>
       SchedulerBinding.instance.platformDispatcher.platformBrightness ==
       Brightness.dark;
 
-  // returns the system's current themeMode
+  /// returns the system's current themeMode
   static ThemeMode get sysThemeMode =>
       isSysDarkMode ? ThemeMode.dark : ThemeMode.light;
 
-  // returns the int value of now timestamp in seconds
+  /// returns the int value of now timestamp in seconds
   static int get now => DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-  // convert timestamp to readable format
-  // if today: returns [Hours:Minutes AM/PM] e.g. 5:30 PM
-  // if yesterday: returns [Yesterday - Hour AM/PM] e.g. Yesterday - 8 AM
-  // if same year: returns [Month Day] e.g. May 29
-  // else: returns [Month Day Year] e.g. Jan. 25 2011
-  // default month format is short e.g. January becomes Jan.
+  /// convert timestamp to readable format
+  /// if today: returns [Hours:Minutes AM/PM] e.g. 5:30 PM
+  /// if yesterday: returns [Yesterday - Hour AM/PM] e.g. Yesterday - 8 AM
+  /// if same year: returns [Month Day] e.g. May 29
+  /// else: returns [Month Day Year] e.g. Jan. 25 2011
+  /// default month format is short e.g. January becomes Jan.
   static String formatTimestamp(int timestamp, {bool shortMonthFormat = true}) {
     late String d12;
     final DateTime now = DateTime.now();
@@ -55,19 +55,20 @@ abstract class XUtils {
     return shortMonthFormat ? d12.shortMonth() : d12;
   }
 
-  // letters string
+  /// letters string
   static const String chars =
       '_AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789';
-  // numbers string
+
+  /// numbers string
   static const String numbers = '0123456789';
 
-  // check if a string is a number e.g. '123' returns true, '+1' returns false
+  /// check if a string is a number e.g. '123' returns true, '+1' returns false
   static bool isNumeric(String str) {
     final RegExp exp = RegExp(r'^-?[0-9]+$');
     return exp.hasMatch(str);
   }
 
-  // if string is a valid email format based on the HTML5 email validation specs
+  /// if string is a valid email format based on the HTML5 email validation specs
   static bool isEmail(String email) {
     final RegExp exp = RegExp(
       r"""
@@ -79,7 +80,7 @@ abstract class XUtils {
     return exp.hasMatch(email);
   }
 
-  // to generate random string with default length value of 16
+  /// to generate random string with default length value of 16
   static String genString({int length = 16}) {
     final String randomString = List.generate(
       length,
@@ -89,7 +90,7 @@ abstract class XUtils {
     return randomString;
   }
 
-  // to generate random number string with default length value of 16
+  /// to generate random number string with default length value of 16
   static String genNum({int length = 16}) {
     final String randomString = List.generate(
       length,
@@ -99,7 +100,7 @@ abstract class XUtils {
     return randomString;
   }
 
-  // to generate timestamp based id string
+  /// to generate timestamp based id string
   static String genId({int length = 16}) =>
       genString(length: length) + now.toString();
 }

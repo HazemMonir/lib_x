@@ -1,36 +1,50 @@
 import 'package:lib_x/lib_x.dart';
 
-// for a quick scaffolding
+/// for a quick scaffolding
 class ScaffoldX extends StatefulWidget {
-  // required: scaffold body
+  /// required: scaffold body
   final Widget body;
-// optional: appBar
+
+  /// optional: appBar
   final Widget? appBar;
-  // appBar height default height is 60
+
+  /// appBar height default height is 60
   final double? appBarHeight;
-  // optional: drawer
+
+  /// optional: drawer
   final Widget? drawer;
-  // optional: NavigationBar
+
+  /// optional: NavigationBar
   final Widget? bottomNavigationBar;
-  // optional: BottomSheet
+
+  /// optional: BottomSheet
   final Widget? bottomSheet;
-  // optional: FloatingActionButton
+
+  /// optional: FloatingActionButton
   final Widget? fab;
-  // optional: fab location
+
+  /// optional: fab location
   final FloatingActionButtonLocation? fabLocation;
-// optional: scaffold constrains
+
+  /// optional: scaffold constrains
   final BoxConstraints? constraints;
-  // optional: backgroundColor
+
+  /// optional: backgroundColor
   final Color? bgColor;
-  //optional: bg decoration
+
+  ///optional: bg decoration
   final DecorationImage? bgDecorationImage;
-  // default textStyle: TextStyle(color: black, fontSize: 16),
+
+  /// default textStyle: TextStyle(color: black, fontSize: 16),
   final TextStyle textStyle;
-  // safearea is true by default
+
+  /// safearea is true by default
   final bool safeArea;
-  // optional: if true, the body will be wrapped by SingleChildScrollView
+
+  /// optional: if true, the body will be wrapped by SingleChildScrollView
   final bool scrollView;
-  //optional: on init function
+
+  ///optional: on init function
   final VoidCallback? onInit;
 
   const ScaffoldX({
@@ -122,62 +136,3 @@ class _ScaffoldXState extends State<ScaffoldX> {
     );
   }
 }
-
-// E.g.
-// class UserPage extends StatelessWidget {
-//   final String username;
-//   const UserPage({Key? key, required this.username}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-
-//     return ScaffoldX(
-//       onInit: () => debugPrint(username),
-//       scrollView: true,
-//       appBar: const MyAppBar(),
-//       bottomNavigationBar: const MyNavBar(),
-//       bgColor: white,
-//       bgDecorationImage: const DecorationImage(
-//         image: AssetImage('assets/images/bg.png'),
-//         fit: BoxFit.fill,
-//         opacity: .3,
-//       ),
-//       body: Center(
-//         child: Text('Hello $username'),
-//       ),
-//     );
-//   }
-// }
-// Or
-// class UserPage extends StatefulWidget {
-//   final String username;
-//   const UserPage({Key? key, required this.username}) : super(key: key);
-
-//   @override
-//   State<UserPage> createState() => _UserPageState();
-// }
-
-// class _UserPageState extends State<UserPage> {
-//     @override
-//   void initState() {
-//     BackButtonInterceptor.add(myInterceptor);
-//     super.initState();
-//   }
-
-//   @override
-//   void dispose() {
-//     BackButtonInterceptor.remove(myInterceptor);
-//     super.dispose();
-//   }
-
-//   FutureOr<bool> myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-//     X.back();
-//     return true;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-
-//     return Scaffold(...);
-//   }
-// }

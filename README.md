@@ -30,20 +30,22 @@ By installing __```lib_x```__, you have these awesome packages already installed
 <br><br>
 
 # __Solutions__
-  - [__MaterialX & X Controller__](#MaterialX-&-X-Controller)
-    - [__MaterialX__](#Widget-MaterialX)
-    - [__X Controller__](#abstract-class-X)
-      - [__Theme Management__](#Theme-Management)
-      - [__Route Management__](#Route-Management)
-  - [__ScaffoldX__](#ScaffoldX)
-  - [__DataProvider__](#DataProvider)
-  - [__StatefulData & ReBuilder__](#StatefulData-&-ReBuilder)
-    - [__StatefulData__](#StatefulData)
-    - [__ReBuilder__](#ReBuilder())
-  - [__ValueController & ReactiveBuilder__](#ValueController-&-ReactiveBuilder)
-  - [__XUtils__](#XUtils)
-  - [__Singleton__](#Singleton)
-  - [__Bonus Widgets__](#Widgets)
+  - [__MaterialX & X Controller__](#materialx--x-controller)
+    - [__MaterialX__](#materialx)
+    - [__X Controller__](#x)
+      - [__Theme Management__](#theme-management)
+      - [__Route Management__](#route-management)
+  - [__ScaffoldX__](#scaffoldx)
+  - [__DataProvider__](#dataprovider)
+  - [__StatefulData & ReBuilder__](#statefuldata--rebuilder)
+    - [__StatefulData__](#statefuldata)
+    - [__ReBuilder__](#rebuilder)
+  - [__ValueController & ReactiveBuilder__](#valuecontroller--reactivebuilder)
+    - [__ValueController__](#valuecontroller)
+    - [__ReactiveBuilder__](#reactivebuilder)
+  - [__XUtils__](#xutils)
+  - [__Singleton__](#singleton)
+  - [__Bonus Widgets__](#widgets)
 <br><br>
 
 ## __MaterialX & X Controller__
@@ -52,7 +54,7 @@ By installing __```lib_x```__, you have these awesome packages already installed
   We often need more than just ```push()``` & ```pop()``` which the simple MaterialApp provides. For a real world application, we need navigation via url, deep linking, routing without depending on ```context```... And for that we need to configure Navigator 2.0 via ```MaterialApp.router()``` or ```MaterialX()``` with the controller class __```X```__ that separates & encapsulates all the routing and themeing concerns.
 <br><br>
 
-### __```Widget MaterialX```__<br>
+### __```MaterialX```__<br>
 Takes these 2 named parameters and builds a ```MaterialApp.router() ``` to be used in the ```runApp()``` function:
 
 - ```MaterialApp materialApp```: MaterialApp that contains the themes, and locale concerns. Not the routing options.
@@ -134,8 +136,8 @@ class MyApp extends StatelessWidget {
 [For more info about RouteMap type and the package routemaster.](https://pub.dev/packages/routemaster)
 <br><br>
 
-### __```abstract class X```__ <br>
-It's the controller class for the ```MaterialX``` widget, and it has the following interface:<br>
+### __```X```__ <br>
+It's an abstract controller class for the ```MaterialX``` widget, and it has the following interface:<br>
 
 Notes:
   - ```abstract class``` in __Dart__ simply means it's not to be instantiated, and can have abstract methods.
@@ -380,7 +382,7 @@ class ProfileWidget extends StatelessWidget {
 
 ```StatefulWidget``` is a very useful widget in a lot of situations, except when it comes to data management. In a real world application, we need to decouple the __Data Layer__ from the __Render Layer__, and put each layer separately, like in __MVC__ design model. That's why this solution is divided in 2 separate classes, a view class "widget", and a stateful data controller class.<br><br>
 
-1. ```StatefulData```:
+### ```StatefulData```:
 It's an extension of ```ChangeNotifier``` with a better name. This would be the controller class of a ```Rebuilder``` widget. This class should encapsulte all the data logic separately from the view logic. When data changes, and the ```@protected update()``` method is called, the ```ReBuilder``` widget will rebuild to reflect the changes of data.
 <br><br>
 Notes: 
@@ -388,8 +390,8 @@ Notes:
     - ```@protected``` method in __Dart__ means: It cannot be called from outside the class. So if you're going to do crud operations on your data model, it must be inside the class.
 <br><br>
 
-2. ```ReBuilder``` :
-It's a widget built on top of ```AnimatedBuilder``` widget that will rebuild when the state of data changes. and it takes 2 named parameters: <br>
+### ```ReBuilder``` :
+It's an AnimatedBuilder abstracted from context that will rebuild when the state of data changes. and it takes 2 named parameters: <br>
     1. ```StatefulData controller```: an instance of a StatefulData object.
     2. ```Function builder```: a function that returns a ```Widget```, which will rebuild when the controller say so.<br>
 
@@ -435,7 +437,7 @@ class ProfileWidget extends StatelessWidget {
 ## __ValueController & ReactiveBuilder__
 Sometimes we only have one independent value that we need to listen to its state. Again, we'll create 2 separate objects. ```ValueController<T>``` to control a value of some type ```T```, and ```ReactiveBuilder``` that refelcts the change of that value. <br>
 
-1. ```ValueController<T>```: 
+### ```ValueController<T>```: 
 It's a value controller object built on top of ```ValueNotifier```. It has a the following interface:
 <br><be>
 
@@ -446,8 +448,8 @@ It's a value controller object built on top of ```ValueNotifier```. It has a the
     - ```void dispose()``` => valueController cannot be used after calling this method. 
 <br><br>
 
-2. ```ReactiveBuilder```
-It's a ```StatelessWidget``` on top of ```ValueListenableBuilder``` that rebuilds when the value of the controller updates. And it takes 2 named parameters:<br>
+### ```ReactiveBuilder```
+It's a ```ValueListenableBuilder``` abstracted from context that rebuilds when the value of the controller updates. And it takes 2 named parameters:<br>
     1. ```ValueController<T>```.
     2. ```Function builder(T value)```: a function with value argument that returns a widget, that rebuilds when the value of controller changes.<br>
 #### E.g.
@@ -554,7 +556,7 @@ class AuthService extends StatefulData implements Singleton {
 ## __Widgets__ 
 <br>
 
-#### ```Widget PersistStateWidget(required Widget child)``` 
+#### ```Widget PersistStateWidget({required Widget child})``` 
 - It could be useful if you have e.g. ScrollView, and you want to maintain its state like scoll position when navigating to other tabs.
 #### E.g.
 ```dart
@@ -575,7 +577,7 @@ class MyListView extends StatelessWidget {
 ```
 <br>
 
-#### ```Widget DismissModalWidget(required Widget child)``` <br><br>
+#### ```Widget DismissModalWidget({required Widget child})``` <br><br>
 - If you will push a modal route and you want it to pop when clicked outside of the dialog widget, wrap the dialog widget with ```DismissModalWidget```.It's more reliable than ```barrierDismissible``` in the native function ```showDialog()```.
 #### E.g.
 ```dart

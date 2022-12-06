@@ -20,29 +20,30 @@ class DismissableModal extends StatelessWidget {
   }
 }
 
-class MyDialog extends StatelessWidget {
-  const MyDialog({super.key});
+// E.g.
+// class MyDialog extends StatelessWidget {
+//   const MyDialog({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(child: Text('Dialog'));
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const Center(child: Text('Dialog'));
+//   }
+// }
 
-class ShowMyDialogButton extends StatelessWidget {
-  const ShowMyDialogButton({super.key});
+// class ShowMyDialogButton extends StatelessWidget {
+//   const ShowMyDialogButton({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () => showDialog(
-        context: context,
-        barrierDismissible: true, // not reliable
-        builder: (context) {
-          return const DismissableModal(child: MyDialog());
-        },
-      ),
-      child: const Text('Show Dismissable Dialog'),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextButton(
+//       onPressed: () => showDialog(
+//         context: context,
+//         barrierDismissible: true, // not reliable
+//         builder: (context) {
+//           return const DismissableModal(child: MyDialog());
+//         },
+//       ),
+//       child: const Text('Show Dismissable Dialog'),
+//     );
+//   }
+// }

@@ -1,8 +1,10 @@
 import 'package:lib_x/lib_x.dart';
 
-// instead of implementing AutomaticKeepAliveClientMixin
+/// instead of implementing AutomaticKeepAliveClientMixin
 class PersistStateWidget extends StatefulWidget {
-  final Widget child; // useful with listView to persist the scroll state
+  final Widget child;
+
+  /// useful with listView to persist the scroll state
   const PersistStateWidget({super.key, required this.child});
 
   @override

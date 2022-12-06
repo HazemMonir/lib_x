@@ -1,9 +1,11 @@
 import 'package:lib_x/lib_x.dart';
 
+/// AnimatedBuilder abstracted from context
 class ReBuilder extends StatelessWidget {
-  // an extension of DataController
+  /// an extension of DataController
   final StatefulData controller;
-  // a builder function that return widget e.g. (){ return Container(); }
+
+  /// a builder function that return widget e.g. (){ return Container(); }
   final Function builder;
 
   const ReBuilder({
@@ -14,7 +16,7 @@ class ReBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // AnimatedBuilder extends AnimatedWidget extends StatefulWidget
+    /// AnimatedBuilder extends AnimatedWidget extends StatefulWidget
     return AnimatedBuilder(
       animation: controller,
       builder: (BuildContext context, Widget? child) => builder(),

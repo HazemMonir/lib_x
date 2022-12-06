@@ -1,5 +1,5 @@
 //
-// to make a singleton class, use implements Singleton
+/// to make a singleton class, use implements Singleton
 
 class Singleton {
   Singleton._();
