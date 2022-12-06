@@ -11,18 +11,19 @@ export 'package:flutter/rendering.dart';
 export 'package:flutter/services.dart';
 //
 export 'package:lib_x/src/const/theme_data.dart';
+//
 export 'package:lib_x/src/utils/extensions.dart';
-export 'package:lib_x/src/utils/implements.dart';
+export 'package:lib_x/src/utils/singleton.dart';
 //
 export 'package:lib_x/src/utils/x_utils.dart';
-//
-export 'package:lib_x/src/x/data_controller/data_controller.dart';
-export 'package:lib_x/src/x/data_controller/rebuilder.dart';
 //
 export 'package:lib_x/src/x/data_provider/data_provider.dart';
 //
 export 'package:lib_x/src/x/material_x/material_x.dart';
 export 'package:lib_x/src/x/material_x/x.dart';
+//
+export 'package:lib_x/src/x/stateful_data/rebuilder.dart';
+export 'package:lib_x/src/x/stateful_data/stateful_data.dart';
 //
 export 'package:lib_x/src/x/value_controller/reactive_builder.dart';
 export 'package:lib_x/src/x/value_controller/value_controller.dart';

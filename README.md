@@ -37,11 +37,12 @@ By installing __```lib_x```__, you have these awesome packages already installed
       - [__Route Management__](#Route-Management)
   - [__ScaffoldX__](#ScaffoldX)
   - [__DataProvider__](#DataProvider)
-  - [__DataController & ReBuilder__](#DataController-&-ReBuilder)
-    - [__DataController__](#DataController)
+  - [__StatefulData & ReBuilder__](#StatefulData-&-ReBuilder)
+    - [__StatefulData__](#StatefulData)
     - [__ReBuilder__](#ReBuilder())
   - [__ValueController & ReactiveBuilder__](#ValueController-&-ReactiveBuilder)
   - [__XUtils__](#XUtils)
+  - [__Singleton__](#Singleton)
   - [__Bonus Widgets__](#Widgets)
 <br><br>
 
@@ -375,11 +376,11 @@ class ProfileWidget extends StatelessWidget {
 ```
 <br>
 
-## __DataController & ReBuilder__
+## __StatefulData & ReBuilder__
 
-```StatefulWidget``` is a very useful widget in a lot of situations, except when it comes to data management. In a real world application, we need to decouple the __Data Layer__ from the __View Layer__, and put each layer separately, like in __MVC__ design model. That's why this solution is divided in 2 separate classes, a view class "widget", and data controller class.<br><br>
+```StatefulWidget``` is a very useful widget in a lot of situations, except when it comes to data management. In a real world application, we need to decouple the __Data Layer__ from the __Render Layer__, and put each layer separately, like in __MVC__ design model. That's why this solution is divided in 2 separate classes, a view class "widget", and a stateful data controller class.<br><br>
 
-1. ```DataController```:
+1. ```StatefulData```:
 It's an extension of ```ChangeNotifier``` with a better name. This would be the controller class of a ```Rebuilder``` widget. This class should encapsulte all the data logic separately from the view logic. When data changes, and the ```@protected update()``` method is called, the ```ReBuilder``` widget will rebuild to reflect the changes of data.
 <br><br>
 Notes: 
@@ -388,15 +389,15 @@ Notes:
 <br><br>
 
 2. ```ReBuilder``` :
-It's a widget built on top of ```AnimatedBuilder``` widget that will rebuild when the controller changes. and it takes 2 named parameters: <br>
-    1. ```DataController controller```: an instance of a DataController object.
-    2. ```Function builder```: a function that returns a ```Widget```, which will rebuild when the controller changes.<br>
+It's a widget built on top of ```AnimatedBuilder``` widget that will rebuild when the state of data changes. and it takes 2 named parameters: <br>
+    1. ```StatefulData controller```: an instance of a StatefulData object.
+    2. ```Function builder```: a function that returns a ```Widget```, which will rebuild when the controller say so.<br>
 
 #### E.g.
 ```dart
 // Instead of StatefulWidget and changing the data with setState(). we'll create 2 separate layers:
-// 1. data model that extends DataController
-class UserModel extends DataController {
+// 1. data model that extends StatefulData
+class UserModel extends StatefulData {
   final String id;
   String username;
 
@@ -405,7 +406,7 @@ class UserModel extends DataController {
   // we manage the data state here inside the data class
   void changeUsername(String newName) {
     username = newName;
-    update(); // triggers Rebuilder to rebuild
+    update(); // triggers Rebuilder to render changes
   }
 }
 
@@ -417,7 +418,7 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserModel userModel = UserProvider.of(context).userModel;
     return ReBuilder(
-      controller: userModel, // first parameter: an instance of DataController
+      controller: userModel, // first parameter: an instance of StatefulData
       builder: () { // second paramter: a function that returns a widget
         // whenever the username changes and update has been called, this widget will reflect these changes
         return Text(userModel.username);
@@ -428,11 +429,11 @@ class ProfileWidget extends StatelessWidget {
 ```
 <br>
 
--  Note: ```ReBuilder``` widget is still a __Statefull__ widget deep under the hood, but with an external controller that triggers __setState()__ for us.
+-  Note: ```ReBuilder``` widget is still a __Statefull__ widget deep under the hood, but with a controller that triggers __setState()__ for us.
 <br><br>
 
 ## __ValueController & ReactiveBuilder__
-Sometimes we only have one independent value that we need to listen to its state. Again, we'll create 2 separate objects. ```ValueController<T>``` to control a value of some type, and ```ReactiveBuilder``` that refelcts the change of that value. <br>
+Sometimes we only have one independent value that we need to listen to its state. Again, we'll create 2 separate objects. ```ValueController<T>``` to control a value of some type ```T```, and ```ReactiveBuilder``` that refelcts the change of that value. <br>
 
 1. ```ValueController<T>```: 
 It's a value controller object built on top of ```ValueNotifier```. It has a the following interface:
@@ -509,7 +510,7 @@ class AdaptiveText extends StatelessWidget {
 ## __XUtils__
 It's an abstract class that provides some handy quick solutions. And it has the following static interface: <br>
 - ```bool XUtils.isUrl(String string)``` => check if string is url
-- ```bool XUtils.isAsset(String path)``` => check if path starts with assets/
+- ```bool XUtils.isAsset(String path)``` => check if path starts with ```"assets/"```
 - ```bool XUtils.isSVG(String path)``` => check if path contains .svg
 - ```bool getter XUtils.isSysDarkMode``` => returns true if system is in dark mode || false
 - ```ThemeMode getter XUtils.sysThemeMode``` => returns the system's current themeMode
@@ -526,6 +527,28 @@ It's an abstract class that provides some handy quick solutions. And it has the 
 - ```String XUtils.genNum({int length = 16})``` => generate random number string with default length value of 16
 - ```String XUtils.genId({int length = 16})``` => generate timestamp based id string
 
+<br><br>
+
+## __Singleton__
+If you want a class to have only one instance of it, use ```implements Singleton```
+
+```dart
+class AuthService extends StatefulData implements Singleton {
+  late bool _auth;
+  bool get isLoggedIn => _auth;
+
+  void login() {
+    // some logic here
+    _auth = true;
+    update();
+  }
+
+  void logout(){
+    _auth = false;
+    update();
+  }
+}
+```
 <br><br>
 
 ## __Widgets__ 

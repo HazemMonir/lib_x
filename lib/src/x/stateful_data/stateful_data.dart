@@ -1,12 +1,12 @@
 import 'package:lib_x/lib_x.dart';
 
 // a layer over ChangeNotifier to be used in ReBuilder widget
-class DataController extends ChangeNotifier {
+class StatefulData extends ChangeNotifier {
   @protected
   void update() => notifyListeners();
 }
 
-// class UserModel extends DataController {
+// class UserModel extends StatefulData {
 //   final String id;
 //   String username;
 

@@ -17,3 +17,7 @@
 ## 0.0.5
 
 * Edited README.md & added more documentations
+
+## 0.0.6
+
+* Added XUtils & Singleton classes

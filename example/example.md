@@ -14,23 +14,27 @@ __lib_x__ was designed to help achieve these goals. And here's a porposal struct
         - material_app.dart
         - route_map.dart
         - theme_data.dart
+        - ...
       - forms/
         - login.dart
         - sign_up.dart
+        - ...
       - layout/
         - app_bar.dart
         - drawer.dart
         - navigation_bar.dart
         - scaffold.dart
-        - so on
+        - ...
       - pages/
         - home_pages.dart
         - not_found_page.dart
+        - ...
       - my_app.dart
     - services/
       - auth.dart
       - api.dart
       - shared_prefs.dart
+        - ...
     - src.dart
   - main.dart
 ___
@@ -112,8 +116,8 @@ Note: each service class should be an encapsulation for only one service. Don't 
 - ## __data/__<br>
 
 Here will be the data concerns only. lib_x provides 2 useful types that will help with data management concerns.
-  1. ```DataController```  will make the data model listenable by the views.
-  2. ```DataProvider<T>``` will make the data accessible by inheritance in the widget tree.
+  1. ```StatefulData```  will make the data model listenable by the views.
+  2. ```DataProvider<T>``` will make the data accessible by context in the widget tree.
 
 #### lib/src/data/news_story.dart
 ```dart
@@ -135,7 +139,7 @@ class StoryProvider extends DataProvider<NewsStory> {
 }
 
 // 1- create the data model controller
-class NewsStory extends DataController {
+class NewsStory extends StatefulData {
   final String id;
   final String title;
   final String content;
@@ -148,6 +152,7 @@ class NewsStory extends DataController {
     this.readLater = false,
   });
 
+  // it's best practice to make all class converters [from || to] class in factory method inside the class
   factory NewsStory.fromMap(Map<String, dynamic> map) {
     return NewsStory(
       id: map['id'] as String,
@@ -181,7 +186,7 @@ class NewsListProvider extends DataProvider<NewsList> {
       context.dependOnInheritedWidgetOfExactType<NewsListProvider>()!;
 }
 
-class NewsList extends DataController {
+class NewsList extends StatefulData {
   final List<NewsStory> newsList = [];
   final List<NewsStory> readLaterList = [];
 
@@ -207,16 +212,16 @@ class NewsList extends DataController {
 <br>
 Notes: <br>
 
-- It's best to declare the provider of a type in the same file with the declaration of the type. So, all the concerns of that type are in the same file. Single Source Of Truth files.
+- It's best to declare the provider of a type in the same file with its declaration. So, all the concerns of that type are in the same file. Single Source Of Truth files.
 - If there's a lot of data types, it best to group related types in sub-directories.. and so on.
 <br><br>
 
 - ## __render/__
-Here will be all the rendering concerns, separated from the data management, and services implementations. And again, we'll group and classify the views elements into separate sub-directories. So let's plan our steps to implement the views components.
+Here will be all the rendering concerns, separated from the data management, and services implementations. And again, we'll group and classify the views elements into sub-directories. So let's plan our steps to implement the views components.
 
-### 1. First step: Define MyApp and its dependencies
+### 1. First step: Define MyApp and its dependencies.
 ### __my_app.dart__ 
-which will contain ```MaterialApp```, the entery point for rendering the app.<br>
+which will contain ```MaterialApp```, the entery point and first concern for rendering the app.<br>
 
 #### lib/src/render/my_app.dart
 ```dart
@@ -535,6 +540,6 @@ I just realized I passed the 500 line, which is ironic cause no one will read th
 ### P.S.
 - Structure does matter.
 - Try as possible to make your files describable as A Single Source Of Truth.
-- Naming should be semantic and self-explanatory, even if you're working solo. It'll save you a lot of time when you want to update something later.
+- Naming should be semantic and self-explanatory, even if you're working solo. It'll save you a lot of time when you want to debug or update something later.
 
 ## #HappyCoding

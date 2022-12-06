@@ -13,7 +13,7 @@ class NewsListProvider extends DataProvider<NewsList> {
       context.dependOnInheritedWidgetOfExactType<NewsListProvider>()!;
 }
 
-class NewsList extends DataController {
+class NewsList extends StatefulData {
   final List<NewsStory> newsList = [];
   final List<NewsStory> readLaterList = [];
 

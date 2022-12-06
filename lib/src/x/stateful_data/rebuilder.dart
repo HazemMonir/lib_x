@@ -2,7 +2,7 @@ import 'package:lib_x/lib_x.dart';
 
 class ReBuilder extends StatelessWidget {
   // an extension of DataController
-  final DataController controller;
+  final StatefulData controller;
   // a builder function that return widget e.g. (){ return Container(); }
   final Function builder;
 

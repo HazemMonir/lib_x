@@ -15,7 +15,7 @@ class StoryProvider extends DataProvider<NewsStory> {
       context.dependOnInheritedWidgetOfExactType<StoryProvider>()!;
 }
 
-class NewsStory extends DataController {
+class NewsStory extends StatefulData {
   final String id;
   final String title;
   final String content;

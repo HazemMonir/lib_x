@@ -17,7 +17,7 @@ class UserProvider extends DataProvider<UserModel> {
   // just copy the method and change the class name.
 }
 
-class UserModel extends DataController {
+class UserModel extends StatefulData {
   final String id;
   String username;
 
