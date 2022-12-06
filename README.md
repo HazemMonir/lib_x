@@ -380,20 +380,22 @@ class ProfileWidget extends StatelessWidget {
 
 ## __StatefulData & ReBuilder__
 
-```StatefulWidget``` is a very useful widget in a lot of situations, except when it comes to data management. In a real world application, we need to decouple the __Data Layer__ from the __Render Layer__, and put each layer separately, like in __MVC__ design model. That's why this solution is divided in 2 separate classes, a view class "widget", and a stateful data controller class.<br><br>
+```StatefulWidget``` is a very useful widget in a lot of situations, except when it comes to data management. In a real world application, we need to decouple the __Data Layer__ from the __Render Layer__, and put each layer separately, like in __MVC__ design. That's why this solution is divided in 2 separate classes, a view class ```Widget```, and a ```StatefulData``` controller class.<br><br>
 
 ### ```StatefulData```:
 It's an extension of ```ChangeNotifier``` with a better name. This would be the controller class of a ```Rebuilder``` widget. This class should encapsulte all the data logic separately from the view logic. When data changes, and the ```@protected update()``` method is called, the ```ReBuilder``` widget will rebuild to reflect the changes of data.
 <br><br>
-Notes: 
-    - ```update()``` is protected by design to force separation of concers.<br>
-    - ```@protected``` method in __Dart__ means: It cannot be called from outside the class. So if you're going to do crud operations on your data model, it must be inside the class.
+Notes: <br>
+  - ```update()``` is protected by design to force separation of concers.<br>
+  - ```@protected``` method in __Dart__ means: It cannot be called from outside the class. So if you're going to do crud operations on your data model, it must be inside the class.
 <br><br>
 
 ### ```ReBuilder``` :
 It's an AnimatedBuilder abstracted from context that will rebuild when the state of data changes. and it takes 2 named parameters: <br>
-    1. ```StatefulData controller```: an instance of a StatefulData object.
-    2. ```Function builder```: a function that returns a ```Widget```, which will rebuild when the controller say so.<br>
+  1. ```StatefulData controller```: an instance of a StatefulData object.
+  <br>
+  2. ```Function builder```: a function that returns a ```Widget```, which will rebuild when the controller say so.
+  <br>
 
 #### E.g.
 ```dart
@@ -441,17 +443,17 @@ Sometimes we only have one independent value that we need to listen to its state
 It's a value controller object built on top of ```ValueNotifier```. It has a the following interface:
 <br><be>
 
-    - ```value``` => returns the current value.
-    - ```ValueListenable listenable``` => listenable object that could be used with ```ValueListenableBuilder```.
-    - ```void update(T v)``` => to update the value property of type ```T```.
-    - ```set onChange(VoidCallback callback)``` => a setter method if you want to attach a callback function that runs whenever the value changes.
-    - ```void dispose()``` => valueController cannot be used after calling this method. 
+  - ```value``` => returns the current value.
+  - ```ValueListenable listenable``` => listenable object that could be used with ```ValueListenableBuilder```.
+  - ```void update(T v)``` => to update the value property of type ```T```.
+  - ```set onChange(VoidCallback callback)``` => a setter method if you want to attach a callback function that runs whenever the value changes.
+  - ```void dispose()``` => valueController cannot be used after calling this method. 
 <br><br>
 
 ### ```ReactiveBuilder```
-It's a ```ValueListenableBuilder``` abstracted from context that rebuilds when the value of the controller updates. And it takes 2 named parameters:<br>
-    1. ```ValueController<T>```.
-    2. ```Function builder(T value)```: a function with value argument that returns a widget, that rebuilds when the value of controller changes.<br>
+It's a ```ValueListenableBuilder``` abstracted from context. It rebuilds when ```controller.update(value)``` invoked. And it takes 2 named parameters:<br>
+  1. ```ValueController<T>```.
+  2. ```Function builder(T value)```: a function with value argument that returns a widget, that rebuilds when the value of controller changes.<br>
 #### E.g.
 ```dart
 final ValueController<ThemeMode> themeModeController = ValueController<ThemeMode>(ThemeMode.dark);
@@ -510,11 +512,11 @@ class AdaptiveText extends StatelessWidget {
 <br><br>
 
 ## __XUtils__
-It's an abstract class that provides some handy quick solutions. And it has the following static interface: <br>
+It's an ```abstract class``` that provides some handy quick solutions. And it has the following static interface: <br>
 - ```bool XUtils.isUrl(String string)``` => check if string is url
 - ```bool XUtils.isAsset(String path)``` => check if path starts with ```"assets/"```
-- ```bool XUtils.isSVG(String path)``` => check if path contains .svg
-- ```bool getter XUtils.isSysDarkMode``` => returns true if system is in dark mode || false
+- ```bool XUtils.isSVG(String path)``` => check if path contains ```".svg"```
+- ```bool getter XUtils.isSysDarkMode``` => returns ```true``` if system is in dark mode || ```false```
 - ```ThemeMode getter XUtils.sysThemeMode``` => returns the system's current themeMode
 - ```int getter XUtils.now``` => returns the int value of now timestamp in seconds.
 - ```String XUtils.formatTimestamp(int timestamp, {bool shortMonthFormat = true})``` => convert timestamp to readable format.
@@ -523,7 +525,7 @@ It's an abstract class that provides some handy quick solutions. And it has the 
   - if same year: returns [Month Day] e.g. May 29
   - else: returns [Month Day Year] e.g. Jan. 25 2011
   - default month format is short e.g. January becomes Jan.
-- ```bool XUtils.isNumeric(String str)``` => check if a string is a number e.g. '123' returns true, '+1' returns false
+- ```bool XUtils.isNumeric(String str)``` => check if a string is a number e.g. '123' returns ```true```, '+1' returns ```false```
 - ```bool XUtils.isEmail(String email)``` check if string is a valid email format based on the HTML5 email validation specs
 - ```String XUtils.genString({int length = 16})``` => generate random string with default length value of 16
 - ```String XUtils.genNum({int length = 16})``` => generate random number string with default length value of 16
@@ -532,7 +534,7 @@ It's an abstract class that provides some handy quick solutions. And it has the 
 <br><br>
 
 ## __Singleton__
-If you want a class to have only one instance of it, use ```implements Singleton```
+If you want a class to have only one instance of it, use ```implements Singleton```<br>
 
 ```dart
 class AuthService extends StatefulData implements Singleton {
@@ -557,7 +559,7 @@ class AuthService extends StatefulData implements Singleton {
 <br>
 
 #### ```Widget PersistStateWidget({required Widget child})``` 
-- It could be useful if you have e.g. ScrollView, and you want to maintain its state like scoll position when navigating to other tabs.
+It could be useful if you have e.g. ScrollView and you want to maintain its state like scoll position when navigating to other tabs.
 #### E.g.
 ```dart
 class MyListView extends StatelessWidget {
@@ -578,7 +580,7 @@ class MyListView extends StatelessWidget {
 <br>
 
 #### ```Widget DismissModalWidget({required Widget child})``` <br><br>
-- If you will push a modal route and you want it to pop when clicked outside of the dialog widget, wrap the dialog widget with ```DismissModalWidget```.It's more reliable than ```barrierDismissible``` in the native function ```showDialog()```.
+If you will push a modal route and you want it to pop when clicked outside of the dialog widget, wrap the dialog widget with ```DismissModalWidget```.It's more reliable than ```barrierDismissible``` in the native function ```showDialog()```.
 #### E.g.
 ```dart
 class MyDialog extends StatelessWidget {
@@ -617,6 +619,7 @@ class ShowMyDialogButton extends StatelessWidget {
 - Feel free extending it or modifying it as you wish.
 <br><br>
 
-## Credits does to the authers of the implemented packages & of course the developers of Dart and Flutter
+### Credits goes to the authers of the implemented packages & of course the developers of Dart & Flutter
+<br><br>
 
 ## Happy Coding

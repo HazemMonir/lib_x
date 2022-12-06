@@ -25,3 +25,7 @@
 ## 0.1.0
 
 * Added some optimizations & full documentation
+
+## 0.1.01
+
+* Fixed README.md
