@@ -33,3 +33,7 @@
 ## 0.1.2
 
 * Updated package description
+
+## 0.1.3
+
+* Hide current SnackBar if a new SnackBar is pushed

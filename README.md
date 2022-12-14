@@ -44,7 +44,6 @@ By installing __```lib_x```__, you have these awesome packages already installed
     - [__ValueController__](#valuecontroller)
     - [__ReactiveBuilder__](#reactivebuilder)
   - [__XUtils__](#xutils)
-  - [__Singleton__](#singleton)
   - [__Bonus Widgets__](#widgets)
 <br><br>
 
@@ -529,28 +528,6 @@ It's an ```abstract class``` that provides some handy quick solutions. And it ha
 - ```String XUtils.genNum({int length = 16})``` => generate random number string with default length value of 16
 - ```String XUtils.genId({int length = 16})``` => generate timestamp based id string
 
-<br><br>
-
-## __Singleton__
-If you want a class to have only one instance of it, use ```implements Singleton```<br>
-
-```dart
-class AuthService extends StatefulData implements Singleton {
-  late bool _auth;
-  bool get isLoggedIn => _auth;
-
-  void login() {
-    // some logic here
-    _auth = true;
-    update();
-  }
-
-  void logout(){
-    _auth = false;
-    update();
-  }
-}
-```
 <br><br>
 
 ## __Widgets__ 

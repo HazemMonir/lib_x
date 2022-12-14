@@ -19,9 +19,6 @@ export 'package:lib_x/src/const/theme_data.dart';
 /// some useful extensions
 export 'package:lib_x/src/utils/extensions.dart';
 
-/// Singleton class
-export 'package:lib_x/src/utils/singleton.dart';
-
 /// XUtils class
 export 'package:lib_x/src/utils/x_utils.dart';
 

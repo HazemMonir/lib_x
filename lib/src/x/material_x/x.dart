@@ -6,62 +6,57 @@ const String Root = '/';
 final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
 /// X short for MaterialX Controller
-abstract class X implements Singleton {
+abstract class X {
+  /// private: used to set [onPlatformBrightnessChanged]
   static late SingletonFlutterWindow _window;
 
-  /// private: used to set onPlatformBrightnessChanged
+  /// private: used to config the [MaterialApp.router]
   static late MaterialApp _materialApp;
 
-  /// private: used to config the MaterialApp.router
-  static late RoutemasterDelegate routerDelegate;
-
-  /// RoutemasterDelegate: from routemaster package
-  static const RoutemasterParser routeParser = RoutemasterParser();
+  /// [RoutemasterDelegate]: from routemaster package
+  static late RoutemasterDelegate router;
 
   /// RoutemasterParser: from routemaster package
-
-  static BuildContext get currentContext => _navigatorKey.currentContext!;
+  static const RoutemasterParser routeParser = RoutemasterParser();
 
   /// getter: for the current context
-  static MediaQueryData get mediaQuery => MediaQuery.of(currentContext);
+  static BuildContext get currentContext => _navigatorKey.currentContext!;
 
   /// getter: to MediaQueryData
-  static ThemeData get theme => Theme.of(currentContext);
+  static MediaQueryData get mediaQuery => MediaQuery.of(currentContext);
 
   /// getter: for the current active theme
+  static ThemeData get theme => Theme.of(currentContext);
+
+  /// ValueController: for a ReactiveBuilder to change the ThemeMode
   static final ValueController<ThemeMode> themeMode =
       ValueController<ThemeMode>(XUtils.sysThemeMode);
 
-  /// ValueController: for a ReactiveBuilder to change the ThemeMode
-
+  /// check if modal is open
   static bool isOpenModal = false;
 
-  /// bool:
-
+  /// current path
   static String currentPath = Root;
 
-  /// current path
+  /// Map: current path parameters
   static late Map<String, String>? currentPathParameters;
 
-  /// Map: current path parameters
-  static late Map<String, String>? currentQueryParameters;
-
   /// Map: current path queries paramaters
+  static late Map<String, String>? currentQueryParameters;
 
   /// used to config MaterialX widget
   static void config({
+    /// the window attatched when app starts
     required SingletonFlutterWindow window,
 
-    /// the window attatched when app starts
+    /// RouteMap: the paths and their corresponding scaffolds
     required RouteMap routeMap,
 
-    /// RouteMap: the paths and their corresponding scaffolds
-    required MaterialApp app,
-
     /// MaterialApp: contains themes and locales configs
+    required MaterialApp app,
   }) {
     setPathUrlStrategy();
-    routerDelegate = RoutemasterDelegate(
+    router = RoutemasterDelegate(
       routesBuilder: (BuildContext context) => routeMap,
       navigatorKey: _navigatorKey,
     );
@@ -94,7 +89,7 @@ abstract class X implements Singleton {
     _updateStatusBar();
   }
 
-  /// private: to update the statusBar color & brightness
+  /// private: to update the statusBar [color] & [brightness]
   static void _updateStatusBar() {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
@@ -106,7 +101,7 @@ abstract class X implements Singleton {
     );
   }
 
-  /// to switch theme mode programmatically
+  /// to switch [ThemeMode] programmatically
   static void switchTheme({ThemeMode? to}) {
     late ThemeMode value;
     late VoidCallback? sysOnChange;
@@ -154,10 +149,9 @@ abstract class X implements Singleton {
 
   /// private: to set current path paramaters and quries
   static void _setCurrentPath() {
-    currentPath = routerDelegate.currentConfiguration!.path;
-    currentPathParameters = routerDelegate.currentConfiguration!.pathParameters;
-    currentQueryParameters =
-        routerDelegate.currentConfiguration!.queryParameters;
+    currentPath = router.currentConfiguration!.path;
+    currentPathParameters = router.currentConfiguration!.pathParameters;
+    currentQueryParameters = router.currentConfiguration!.queryParameters;
     debugPrint('Current path: $currentPath');
   }
 
@@ -168,8 +162,8 @@ abstract class X implements Singleton {
     if (isOpenModal) {
       isOpenModal = false;
       pop();
-    } else if (_enabledBack && routerDelegate.history.canGoBack) {
-      routerDelegate.history.back();
+    } else if (_enabledBack && router.history.canGoBack) {
+      router.history.back();
       _enabledBack = false;
       _setCurrentPath();
       Timer(const Duration(seconds: 1), () => _enabledBack = true);
@@ -178,19 +172,19 @@ abstract class X implements Singleton {
 
   /// to a defined path in the RouteMap
   static void to({required String path}) {
-    routerDelegate.push(path);
+    router.push(path);
     _setCurrentPath();
   }
 
   /// to path and prevent back
   static void offTo({required String path}) {
-    routerDelegate.replace(path);
+    router.replace(path);
     _setCurrentPath();
   }
 
   /// back to any previous route in the material route stack
   static void backTo({required String path}) {
-    routerDelegate.popUntil(((routeData) => routeData.path != path));
+    router.popUntil(((routeData) => routeData.path != path));
     _setCurrentPath();
   }
 
@@ -201,29 +195,30 @@ abstract class X implements Singleton {
   static void dissmissKeyboard() => FocusScope.of(currentContext).unfocus();
 
   /// show snackBar
-  static void showSnackBar({required SnackBar snackBar}) =>
-      ScaffoldMessenger.of(currentContext).showSnackBar(snackBar);
+  static void showSnackBar({required SnackBar snackBar}) {
+    ScaffoldMessenger.of(currentContext).hideCurrentSnackBar();
+    ScaffoldMessenger.of(currentContext).showSnackBar(snackBar);
+  }
 
   /// show notification widget in overlay
   static void showNotification({
+    /// the notification widget
     required Widget widget,
 
-    /// the notification widget
+    /// if notification widget is dismissable
     bool dismissable = true,
 
-    /// if notification widget is dismissable
+    /// callback on dismiss
     VoidCallback? onDismiss,
 
-    /// callback on dismiss
+    /// callback onTap
     VoidCallback? onTap,
 
-    /// callback onTap
+    /// the duration before dismissing the notification widget
     Duration duration = const Duration(seconds: 5),
 
-    /// the duration before dismissing the notification widget
-    NotificationPosition position = NotificationPosition.top,
-
     /// position of notification widget
+    NotificationPosition position = NotificationPosition.top,
   }) {
     if (onTap != null) {
       widget = GestureDetector(
@@ -255,18 +250,17 @@ abstract class X implements Singleton {
 
   /// show dialog widget in a material modal
   static void showModal({
+    /// dialog widget
     required Widget widget,
 
-    /// dialog widget
+    /// bool: is wrapped with safeArea
     bool safeArea = true,
 
-    /// bool: is wrapped with safeArea
+    /// bool: is dialog dismissable when tapped outside
     bool dismissable = true,
 
-    /// bool: is dialog dismissable when tapped outside
-    Color? barrierColor,
-
     /// Color: the barrier background color
+    Color? barrierColor,
   }) {
     isOpenModal = true;
     showDialog(

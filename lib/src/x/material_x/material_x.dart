@@ -90,7 +90,7 @@ class MaterialX extends StatelessWidget {
         routeInformationParser: X.routeParser,
 
         /// RoutemasterParser routeInformationParser
-        routerDelegate: X.routerDelegate,
+        routerDelegate: X.router,
 
         /// RoutemasterDelegate routerDelegate
       ),
