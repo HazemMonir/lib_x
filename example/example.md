@@ -10,8 +10,7 @@ ___
 
 Now let's create a simple application that loads news stories from some source, and see how it should be structured properly.
 
-Here's a visual of the app: <br>
-![](https://github.com/HazemMonir/gifs/blob/main/lib_x_example.gif)
+Here's a visual of the app on [YouTube](https://youtube.com/shorts/EZq5HonfSfU?feature=share)
 
 #### After ```flutter create example```
 ### __lib/__ <br>
