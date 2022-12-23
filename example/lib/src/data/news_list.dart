@@ -1,19 +1,13 @@
 import 'package:example/src/src.dart';
 
-class NewsListProvider extends DataProvider<NewsList> {
-  final NewsList newsList;
-
-  const NewsListProvider({
-    super.key,
-    required this.newsList,
-    required super.child,
-  }) : super(data: newsList);
-
-  static NewsListProvider of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<NewsListProvider>()!;
-}
-
 class NewsList extends StatefulData {
+  NewsList._constructor();
+
+  static final NewsList _this = NewsList._constructor();
+
+  // create a public getter that returns the same final object everytime
+  static NewsList get instance => _this;
+
   final List<NewsStory> newsList = [];
   final List<NewsStory> readLaterList = [];
 
@@ -25,7 +19,7 @@ class NewsList extends StatefulData {
     update();
   }
 
-  void loadReadLater() async {
+  void updateReadLater() async {
     readLaterList.clear();
     final List<NewsStory> stories = await Future.value(
       newsList.where((story) => story.readLater).toList(),

@@ -5,7 +5,7 @@ import 'package:lib_x/lib_x.dart';
 const Color lightC = Color.fromARGB(255, 230, 226, 247);
 const Color lightC1 = Color.fromARGB(255, 241, 239, 253);
 const Color darkC = Color.fromARGB(255, 39, 37, 54);
-const Color darkC1 = Color.fromARGB(255, 44, 42, 62);
+const Color darkC1 = Color.fromARGB(255, 47, 45, 69);
 const Color primaryC = Color.fromARGB(255, 255, 0, 212);
 
 final ThemeData myLightTheme = ThemeData.light().copyWith(

@@ -5,14 +5,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NewsList news = NewsList()..loadNewsStories();
-    // App level providers
-    return NewsListProvider(
-      newsList: news,
-      child: MaterialX(
-        materialApp: materialApp,
-        routeMap: routeMap,
-      ),
+    NewsList.instance.loadNewsStories();
+
+    return MaterialX(
+      materialApp: materialApp,
+      routeMap: routeMap,
     );
   }
 }

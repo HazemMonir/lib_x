@@ -9,8 +9,8 @@ abstract class Api {
       10,
       (index) => {
         'id': XUtils.genId(),
-        'title': 'Title: $index',
-        'content': 'Some content here',
+        'title': 'Title: ${index + 1}',
+        'content': 'Content of ${index + 1}',
       },
     );
     for (var value in snapshot) {

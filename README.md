@@ -5,16 +5,16 @@ __lib_x__ is a simple library that includes some well tested, and commonly neede
 <br><br>
 
 ### __lib_x__ is designed to complement 2 things:
-  - The __Object-Oriented__ nature of __Dart__ by separating between the ```View``` logic & the ```Data``` logic in a __Flutter__ application.
+  - The __Object-Oriented__ nature of __Dart__ by separating between the _View_ concerns & the _Data_ concerns in a __Flutter__ application.
   - The __Flutter Framework__ methods with some simplifications. So we're making things the __Flutter__ way.
 <br><br>
 
 ### The purpose of this library:
 - Grouping some basic packages into one.
-- Avoiding some of the commonly needed boilerplate.
+- Skipping some of the commonly needed boilerplate.
 - Providing simple solutions for [__Routing__, __State Management__, __Data Providers__].
 - Helping with the __Design Pattern & Separation Of Concerns__.
-- __Semantic & Self-Explanatory Naming__.
+- Semantic & Self-Explanatory Naming.
 <br><br>
 
 ### Packages included in this liberary:
@@ -70,7 +70,7 @@ lib/src/views/const/route_map.dart
 const String LoginPath = '/login';
 const String RootPath = '/';
 const String UserPath = '/user/';
-const String ContactPath = '/contact/';
+const String ContactMePath = '/contactMe/';
 const String PostPath = '/post/';
 
 // if authentication, guarded routes
@@ -85,8 +85,8 @@ final RouteMap routeMap = RouteMap(
     UserPath + ':username': (RouteData info) => isLoggedIn
       ? MaterialPage(child: UserPage(username: info.pathParameters['username']!))
       : const Redirect(LoginPath),
-    UserPath + ':username' + ContactPath : (RouteData info) => isLoggedIn
-      ? MaterialPage(child: ContactUserPage(username: info.pathParameters['username']!))
+    UserPath + ':username' + ContactMePath : (RouteData info) => isLoggedIn
+      ? MaterialPage(child: ContactMePage(username: info.pathParameters['username']!))
       : const Redirect(LoginPath),
     PostPath + ':postId': (RouteData info) => isLoggedIn
       ? MaterialPage(child: PostPage(postId: info.pathParameters['postId']!))
@@ -102,11 +102,19 @@ final RouteMap routeMap = RouteMap(
   },
   onUnknownRoute: (_) => const MaterialPage(child: NotFoundPage()), // fallback route
 );
+
+// now from anywhere in your app you can navigate like this:
+// X.to(UserPath + '<username>'); // will navigate to UserPage(username: <username>)
+// X.to(UserPath + '<username>' + ContactMePath); // will navigate to ContactMePage(username: <username>)
+// X.to(PostPath + '<postId>'); // will navigate to PostPage(postId: <postId>)
+// X.to(PostPath + '<postId>/<commentId>'); // will navigate to CommentPage(postId: <postId>, commentId: <commentId>)
+// ... etc
+
 ```
 lib/src/views/const/material_app.dart
 ```dart
 final MaterialApp materialApp = MaterialApp(
-  title: 'Contacts App',
+  title: 'Example App',
   debugShowCheckedModeBanner: false,
   theme: myLightTheme,
   darkTheme: myDarkTheme,
@@ -126,9 +134,6 @@ class MyApp extends StatelessWidget {
       );
   }
 }
-
-// now from anywhere in your app you can navigate like this:
-// X.to(UserPath + '_username_');
 ```
 [For more info about RouteMap type and the package routemaster.](https://pub.dev/packages/routemaster)
 <br><br>
@@ -534,7 +539,7 @@ It's an ```abstract class``` that provides some handy quick solutions. And it ha
 <br>
 
 #### ```Widget PersistStateWidget({required Widget child})``` 
-It could be useful if you have e.g. ScrollView and you want to maintain its state like scoll position when navigating to other tabs.
+It could be useful if you have e.g. ScrollView and you want to maintain its scroll position when navigating to other tabs.
 #### E.g.
 ```dart
 class MyListView extends StatelessWidget {
@@ -586,6 +591,8 @@ class ShowMyDialogButton extends StatelessWidget {
 }
 ```
 - Note: The dismissable behavior is the default if you're gonna use ```X.showModal(child: MyDialog())``` instead of showDialog().
+<br><br>
+___
 <br><br>
 
 ### P.S. 

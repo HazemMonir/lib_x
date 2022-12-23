@@ -6,18 +6,31 @@ class StoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NewsList newsController = NewsListProvider.of(context).newsList;
-    final NewsStory story = newsController.getById(id);
+    final NewsStory story = NewsList.instance.getById(id);
 
     return StoryProvider(
       story: story,
       child: ScaffoldX(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            StoryTitle(),
-            StoryContent(),
-          ],
+        appBar: const StoryPageAppBar(),
+        body: Center(
+          child: Container(
+            padding: const EdgeInsets.all(40),
+            decoration: BoxDecoration(
+              color: darkC1,
+              boxShadow: myShadow,
+              borderRadius: semiRounded,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('id: $id'),
+
+                /// notice we're not passing any data, because we have a provider
+                const StoryTitle(),
+                const StoryContent(),
+              ],
+            ),
+          ),
         ),
       ),
     );

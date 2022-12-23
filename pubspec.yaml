@@ -13,7 +13,7 @@ dependencies:
   overlay_support: ^2.1.0
   routemaster: ^1.0.1
   back_button_interceptor: ^6.0.2
-  intl: ^0.17.0
+  intl: ^0.18.0
   url_strategy: ^0.2.0
 
 dev_dependencies:

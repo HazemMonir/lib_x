@@ -39,6 +39,7 @@ class NewsStory extends StatefulData {
 
   void toggleReadLater() {
     readLater = !readLater;
+    NewsList.instance.updateReadLater();
     update();
   }
 }

@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return ScaffoldX(
-      appBar: const HomeAppBar(), // ToDo: declare
+      appBar: const HomePageAppBar(), // ToDo: declare
       body: TabBarView(
         controller: NewsList.tabController,
         children: const [

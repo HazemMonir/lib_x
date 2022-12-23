@@ -1,46 +1,18 @@
 # Getting Started
 
-This example application will demonstrate how an application with lib_x should be structured.
-
 In a real world application we need to structure our app to be maintainable, scalable, and to allow for collaboration between developers. And for that, we need a clear design pattern, and separation of concerns among other things.<br><br>
-__lib_x__ was designed to help achieve these goals. And here's a porposal structure you can use as a starting point for your next application.
 
-- lib/
-  - src/
-    - data/
-      - user_model.dart
-    - render/
-      - const/
-        - material_app.dart
-        - route_map.dart
-        - theme_data.dart
-        - ...
-      - forms/
-        - login.dart
-        - sign_up.dart
-        - ...
-      - layout/
-        - app_bar.dart
-        - drawer.dart
-        - navigation_bar.dart
-        - scaffold.dart
-        - ...
-      - pages/
-        - home_pages.dart
-        - not_found_page.dart
-        - ...
-      - my_app.dart
-    - services/
-      - auth.dart
-      - api.dart
-      - shared_prefs.dart
-        - ...
-    - src.dart
-  - main.dart
+__lib_x__ was designed to help achieve these goals. So [here](https://www.figma.com/file/TgJAynEYw3LaEzLTfgkJBa/Flutter-App-OOD?node-id=0%3A1&t=swFcLDZlU9apdhCr-1) is a Figma template you can use as a starting point for your next project to help you analyze and structure your app.
+
+Also [here](https://medium.com/@hazem.monir/a5ac7f0f8745) is a tutorial article on medium.com for a more comprehensive example demonstrating data CRUDing and State Managment using lib_x
 ___
 <br>
 
-Now let's imagine we have an application that loads news stories from some source, and see how it could be structured properly.
+Now let's create a simple application that loads news stories from some source, and see how it should be structured properly.
+
+Here's a visual of the app: <br>
+![](demo.gif)
+
 #### After ```flutter create example```
 ### __lib/__ <br>
 let's keep it clean and make a new folder _src_ to be the container of the app and let's have a simple _main.dart_ like this: <br>
@@ -90,6 +62,9 @@ The benefits of that: if you wanted at some point to migrate from firestore to a
 ```dart
 import 'package:example/src/src.dart';
 
+// here we're going to make use of the abstract class,
+// because we don't want our api to be instantiated
+// it's just an encapsulation to the behaviors we need in our app
 abstract class Api {
   static Future<List<NewsStory>> fetchStories() async {
     // load from db logic
@@ -98,9 +73,9 @@ abstract class Api {
     final List<Map<String, dynamic>> snapshot = List.generate(
       10,
       (index) => {
-        'id': genId(),
-        'title': 'Title: $index',
-        'content': 'Some content here',
+        'id': XUtils.genId(),
+        'title': 'Title: ${index + 1}',
+        'content': 'Content of ${index + 1}',
       },
     );
     for (var value in snapshot) {
@@ -110,7 +85,7 @@ abstract class Api {
   }
 }
 ```
-Note: each service class should be an encapsulation for only one service. Don't make a class that does everything.
+Note: each service class should be an encapsulation for only one service. Don't make a class that does everything. So for example, don't make a class that deals with database and storage and auth, but rather a class for each service.
 <br>
 
 - ## __data/__<br>
@@ -122,6 +97,38 @@ Here will be the data concerns only. lib_x provides 2 useful types that will hel
 #### lib/src/data/news_story.dart
 ```dart
 import 'package:example/src/src.dart';
+
+// 1- create the data model
+class NewsStory extends StatefulData {
+  final String id;
+  final String title;
+  final String content;
+  bool readLater;
+
+  NewsStory({
+    required this.id,
+    required this.title,
+    required this.content,
+    this.readLater = false,
+  });
+
+  // it's best practice to make all the converters [from || to] class in factory method inside the class
+  factory NewsStory.fromMap(Map<String, dynamic> map) {
+    return NewsStory(
+      id: map['id'] as String,
+      title: map['title'] as String,
+      content: map['content'] as String,
+      readLater: map['readLater'] ?? false,
+    );
+  }
+
+  void toggleReadLater() {
+    readLater = !readLater;
+    NewsList.instance.updateReadLater();
+    update();
+  }
+}
+
 // 2- create the data model provider
 class StoryProvider extends DataProvider<NewsStory> {
   // Declare the desired data you want the provider to provide
@@ -138,34 +145,20 @@ class StoryProvider extends DataProvider<NewsStory> {
       context.dependOnInheritedWidgetOfExactType<StoryProvider>()!;
 }
 
-// 1- create the data model controller
-class NewsStory extends StatefulData {
-  final String id;
-  final String title;
-  final String content;
-  bool readLater;
+// or you can do the provider like this
+class StoryProvider extends DataProvider<NewsStory> {
+  // Declare the desired data as data
+  final NewsStory data;
 
-  NewsStory({
-    required this.id,
-    required this.title,
-    required this.content,
-    this.readLater = false,
+  const StoryProvider({
+    super.key,
+    required super.data, // first argument: require & pass the data object to the super class
+    required super.child, // second argument: require & pass child to the super class
   });
 
-  // it's best practice to make all class converters [from || to] class in factory method inside the class
-  factory NewsStory.fromMap(Map<String, dynamic> map) {
-    return NewsStory(
-      id: map['id'] as String,
-      title: map['title'] as String,
-      content: map['content'] as String,
-      readLater: map['readLater'] ?? false,
-    );
-  }
-
-  void toggleReadLater() {
-    readLater = !readLater;
-    update();
-  }
+  // Declare a static method that returns the provider instance of(context)
+  static StoryProvider of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<StoryProvider>()!;
 }
 
 ```
@@ -173,22 +166,23 @@ class NewsStory extends StatefulData {
 ```dart
 import 'package:example/src/src.dart';
 
-class NewsListProvider extends DataProvider<NewsList> {
-  final NewsList newsList;
-
-  const NewsListProvider({
-    super.key,
-    required this.newsList,
-    required super.child,
-  }) : super(data: newsList);
-
-  static NewsListProvider of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<NewsListProvider>()!;
-}
-
+// here instead of doing a provider class, 
+// we're goona explore a useful technique "singleton class", 
+// because we don't want NewsList to be instantiated more than once.
 class NewsList extends StatefulData {
+  // declare a private constructor
+  NewsList._constructor();
+
+  // assign it to a static final private variable
+  static final NewsList _this = NewsList._constructor();
+
+  // create a public getter that returns the same final object everytime
+  static NewsList get instance => _this;
+
   final List<NewsStory> newsList = [];
   final List<NewsStory> readLaterList = [];
+
+  static late TabController tabController;
 
   void loadNewsStories() async {
     final List<NewsStory> stories = await Api.fetchStories();
@@ -196,7 +190,7 @@ class NewsList extends StatefulData {
     update();
   }
 
-  void loadReadLater() async {
+  void updateReadLater() async {
     readLaterList.clear();
     final List<NewsStory> stories = await Future.value(
       newsList.where((story) => story.readLater).toList(),
@@ -232,16 +226,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // App level providers
-    // providers can be nested as much as we need
-    final NewsList news = NewsList()..loadNewsStories();
+    // here we'll load the stories data when app starts building
+    NewsList.instance.loadNewsStories();
 
-    return NewsListProvider(
-      newsList: news,
-      child: MaterialX(
-        materialApp: materialApp, // ToDo: declare
-        routeMap: routeMap, // ToDo: declare
-      ),
+    return MaterialX(
+      materialApp: materialApp,
+      routeMap: routeMap,
     );
   }
 }
@@ -256,7 +246,7 @@ in this directory will have the constant definitions the app need. And for a min
 const Color lightC = Color.fromARGB(255, 230, 226, 247);
 const Color lightC1 = Color.fromARGB(255, 241, 239, 253);
 const Color darkC = Color.fromARGB(255, 39, 37, 54);
-const Color darkC1 = Color.fromARGB(255, 44, 42, 62);
+const Color darkC1 = Color.fromARGB(255, 47, 45, 69);
 const Color primaryC = Color.fromARGB(255, 255, 0, 212);
 
 final ThemeData myLightTheme = ThemeData.light().copyWith(
@@ -272,6 +262,20 @@ final ThemeData myDarkTheme = ThemeData.dark().copyWith(
   scaffoldBackgroundColor: darkC,
   canvasColor: transparent,
 );
+
+// some default shadow
+final List<BoxShadow> myShadow = [
+  BoxShadow(
+    color: black.withOpacity(0.15),
+    spreadRadius: 5,
+    blurRadius: 8,
+    offset: const Offset(2, 2),
+  ),
+];
+
+// some default BorderRadius
+final BorderRadius semiRounded = borderRadius(15);
+final BorderRadius rounded = borderRadius(200);
 ```
 
 #### lib/src/render/const/route_map.dart
@@ -350,8 +354,8 @@ class _HomePageState extends State<HomePage>
 ```dart
 import 'package:example/src/src.dart';
 
-class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key});
+class HomePageAppBar extends StatelessWidget {
+  const HomePageAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -360,9 +364,6 @@ class HomeAppBar extends StatelessWidget {
 
     NewsList.tabController.addListener(() {
       indexController.update(NewsList.tabController.index);
-      if (NewsList.tabController.index == 1) {
-        newsController.loadReadLater();
-      }
     });
 
     return ReactiveBuilder(
@@ -398,6 +399,23 @@ class HomeAppBar extends StatelessWidget {
     );
   }
 }
+
+class StoryPageAppBar extends StatelessWidget {
+  const StoryPageAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ReactiveBuilder(
+          controller: X.themeMode,
+          builder: (themeMode) {
+            return AppBar(
+              backgroundColor: themeMode == ThemeMode.dark ? darkC1 : lightC1,
+              leading: const BackButton(color: primaryC),
+            );
+          },
+        );
+  }
+}
 ```
 #### lib/src/render/lists/stories_list.dart - add to _src.dart_
 ```dart
@@ -408,12 +426,14 @@ class StoriesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NewsList newsController = NewsListProvider.of(context).newsList;
+    final NewsList newsController = NewsList.instance;
 
     return ReBuilder(
       controller: newsController,
       builder: () {
-        return ListView.builder(
+        return ListView.separated(
+          padding: const EdgeInsets.all(10),
+          separatorBuilder: (_, i) => const SizedBox(height: 10),
           itemCount: newsController.newsList.length,
           itemBuilder: (context, index) {
             return StoryProvider(
@@ -437,13 +457,14 @@ class ReadLaterListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NewsList newsController = NewsListProvider.of(context).newsList
-      ..loadReadLater();
+    final NewsList newsController = NewsList.instance;
 
     return ReBuilder(
       controller: newsController,
       builder: () {
-        return ListView.builder(
+        return ListView.separated(
+          padding: const EdgeInsets.all(10),
+          separatorBuilder: (_, i) => const SizedBox(height: 10),
           itemCount: newsController.readLaterList.length,
           itemBuilder: (context, index) {
             return StoryProvider(
@@ -468,25 +489,33 @@ class StoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NewsStory story = StoryProvider.of(context).story;
-    return Column(
-      children: [
-        const SizedBox(height: 20),
-        GestureDetector(
-          onTap: () => X.to(path: storyPath(story.id)),
-          child: Text(story.title),
+    return GestureDetector(
+      onTap: () => X.to(path: storyPath(story.id)),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: darkC1,
+          boxShadow: myShadow,
+          borderRadius: semiRounded,
         ),
-        ReBuilder(
-          controller: story,
-          builder: () {
-            final bool added = story.readLater;
-            return TextButton(
-              onPressed: () => story.toggleReadLater(),
-              child:
-                  Text(added ? 'Remove from read later' : 'Add to read later'),
-            );
-          },
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Text(story.title),
+            ReBuilder(
+              controller: story,
+              builder: () {
+                final bool added = story.readLater;
+                return TextButton(
+                  onPressed: () => story.toggleReadLater(),
+                  child: Text(
+                      added ? 'Remove from read later' : 'Add to read later'),
+                );
+              },
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -501,16 +530,32 @@ class StoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NewsList newsController = NewsListProvider.of(context).newsList;
-    final NewsStory story = newsController.getById(id);
+    final NewsStory story = NewsList.instance.getById(id);
 
     return StoryProvider(
       story: story,
-      child: Column(
-        children: const [
-          StoryTitle(),
-          StoryContent(),
-        ],
+      child: ScaffoldX(
+        appBar: const StoryPageAppBar(),
+        body: Center(
+          child: Container(
+            padding: const EdgeInsets.all(40),
+            decoration: BoxDecoration(
+              color: darkC1,
+              boxShadow: myShadow,
+              borderRadius: semiRounded,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('id: $id'),
+
+                /// notice we're not passing any data, because we have a provider
+                const StoryTitle(),
+                const StoryContent(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

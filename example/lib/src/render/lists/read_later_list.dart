@@ -5,12 +5,14 @@ class ReadLaterListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NewsList newsController = NewsListProvider.of(context).newsList;
+    final NewsList newsController = NewsList.instance;
 
     return ReBuilder(
       controller: newsController,
       builder: () {
-        return ListView.builder(
+        return ListView.separated(
+          padding: const EdgeInsets.all(10),
+          separatorBuilder: (_, i) => const SizedBox(height: 10),
           itemCount: newsController.readLaterList.length,
           itemBuilder: (context, index) {
             return StoryProvider(
