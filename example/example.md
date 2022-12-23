@@ -10,7 +10,7 @@ ___
 
 Now let's create a simple application that loads news stories from some source, and see how it should be structured properly.
 
-Here's a visual of the app on [YouTube](https://youtube.com/shorts/EZq5HonfSfU?feature=share)
+[Here's](https://youtube.com/shorts/EZq5HonfSfU?feature=share) a visual of the app on YouTube.
 
 #### After ```flutter create example```
 ### __lib/__ <br>
