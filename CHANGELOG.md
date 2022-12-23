@@ -41,3 +41,7 @@
 ## 0.1.4
 
 * Added visual demo to the example app
+
+## 0.1.5
+
+* fixed example app gif

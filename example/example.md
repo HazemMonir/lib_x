@@ -11,7 +11,7 @@ ___
 Now let's create a simple application that loads news stories from some source, and see how it should be structured properly.
 
 Here's a visual of the app: <br>
-![](demo.gif)
+![](https://github.com/HazemMonir/gifs/blob/main/lib_x_example.gif)
 
 #### After ```flutter create example```
 ### __lib/__ <br>
