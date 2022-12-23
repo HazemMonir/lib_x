@@ -44,4 +44,4 @@
 
 ## 0.1.5
 
-* fixed example app gif
+* The gif didn't work, so it's replaced with a youtube video
