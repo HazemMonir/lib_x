@@ -37,3 +37,7 @@
 ## 0.1.3
 
 * Hide current SnackBar if a new SnackBar is pushed
+
+## 0.1.4
+
+* Added visual demo to the example app
