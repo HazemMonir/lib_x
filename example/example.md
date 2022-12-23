@@ -4,7 +4,7 @@ In a real world application we need to structure our app to be maintainable, sca
 
 __lib_x__ was designed to help achieve these goals. So [here](https://www.figma.com/file/TgJAynEYw3LaEzLTfgkJBa/Flutter-App-OOD?node-id=0%3A1&t=swFcLDZlU9apdhCr-1) is a Figma template you can use as a starting point for your next project to help you analyze and structure your app.
 
-Also [here](https://medium.com/@hazem.monir/a5ac7f0f8745) is a tutorial article on medium.com for a more comprehensive example demonstrating data CRUDing and State Managment using lib_x
+Also [here](https://medium.com/@hazem.monir/dart-flutter-lib-x-object-oriented-design-ood-complete-example-a5ac7f0f8745) is a tutorial article on medium.com for a more comprehensive example demonstrating data CRUDing and State Managment using lib_x
 ___
 <br>
 
